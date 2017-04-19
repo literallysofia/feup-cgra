@@ -88,7 +88,9 @@ LightingScene.prototype.init = function(application) {
     this.cylinderAppearance.setAmbient(0.5, 0.5, 0.5, 1);
 
     //time
+    this.firstTime=1;
     this.setUpdatePeriod(100);
+
 
 };
 
@@ -127,7 +129,17 @@ LightingScene.prototype.updateLights = function() {
 
 LightingScene.prototype.update = function(currTime){
 
-    this.clock.update(currTime);
+    if(this.firstTime == 1){
+      this.lastTime = currTime;
+      this.firstTime=0;
+    }
+
+    if(this.firstTime==0){
+      this.lastTime = this.lastTime;
+      this.deltaTime = currTime - this.lastTime;
+      this.lastTime = currTime;
+      this.clock.update(this.deltaTime);
+    }
 
 }
 

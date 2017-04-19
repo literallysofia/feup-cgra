@@ -58,15 +58,17 @@ MyClock.prototype.display = function() {
 
 }
 
-MyClock.prototype.update = function(currTime){
+MyClock.prototype.update = function(deltaTime){
 
-  var totalSecs = currTime/1000;
-  var sec = totalSecs % 60;
-  var min = (totalSecs % 3600) / 60;
-  var hour = (totalSecs /3600) %12;
+  let time = deltaTime/1000;
 
-  this.secPointer.setAngle(sec*360/60);
-  this.minPointer.setAngle(min*360/60);
-  this.hourPointer.setAngle(hour*360/12);
+  let secAngle=(this.secPointer.angle + time * 360/60)%360;
+  let minAngle=(this.minPointer.angle + time * 360/60/60)%360;
+  let hourAngle=(this.hourPointer.angle + time * 360/60/60/12)%360;
+
+  this.secPointer.setAngle(secAngle);
+  this.minPointer.setAngle(minAngle);
+  this.hourPointer.setAngle(hourAngle);
+
 
 }
