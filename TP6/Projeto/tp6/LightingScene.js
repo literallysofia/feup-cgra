@@ -281,14 +281,16 @@ LightingScene.prototype.display = function() {
 
     //Submarine
     this.pushMatrix();
+    this.translate(8,0,8);
+    this.rotate(180*degToRad,0,1,0);
     this.submarine.display();
     this.popMatrix();
 
     //Ocean
     this.pushMatrix();
-    this.translate(7.5, 0, 7.5);
+    this.translate(8, 0, 8);
     this.rotate(-90 * degToRad, 1, 0, 0);
-    this.scale(15, 15, 0.2);
+    this.scale(16, 16, 0.2);
     this.oceanAppearance.apply();
     this.ocean.display();
     this.popMatrix();
