@@ -69,6 +69,4 @@ MyClock.prototype.update = function(deltaTime){
   this.secPointer.setAngle(secAngle);
   this.minPointer.setAngle(minAngle);
   this.hourPointer.setAngle(hourAngle);
-
-
 }

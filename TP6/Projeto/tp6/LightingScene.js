@@ -6,6 +6,8 @@ var BOARD_HEIGHT = 4.0;
 var BOARD_A_DIVISIONS = 1;
 var BOARD_B_DIVISIONS = 100;
 
+var CLOCKPAUSE;
+
 function LightingScene() {
     CGFscene.call(this);
 }
@@ -33,8 +35,8 @@ LightingScene.prototype.init = function(application) {
     this.wall = new Plane(this);
     this.leftWall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);
     this.floor = new MyQuad(this, 0, 10, 0, 12);
-    this.ocean = new Plane(this, 100,0,5,0,5);
-    this.stake = new MyCylinder(this, 8,20);
+    this.ocean = new Plane(this, 100, 0, 5, 0, 5);
+    this.stake = new MyCylinder(this, 8, 20);
 
     this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25, 1.25, 0, 1);
     this.boardB = new Plane(this, BOARD_B_DIVISIONS);
@@ -101,20 +103,28 @@ LightingScene.prototype.init = function(application) {
 
 
     //time
-    this.firstTime=1;
+    this.firstTime = 1;
     this.setUpdatePeriod(100);
 
     //tp6
-    this.option1=true; this.option2=false; this.speed=3;this.option1=true; this.option2=false; this.speed=3;
+    this.luz0 = true;
+    this.luz1 = false;
+    this.speed = 3;
+    CLOCKPAUSE = false;
 
     //submarine data
-    this.subAngle=180*degToRad;
-    this.subX=8;
-    this.subZ=8;
+    this.subAngle = 180 * degToRad;
+    this.subX = 8;
+    this.subZ = 8;
 };
 
-LightingScene.prototype.doSomething = function ()
-{ console.log("Doing something..."); };
+LightingScene.prototype.animacaoRelogio = function() {
+    console.log("Changed animation...");
+
+    if (CLOCKPAUSE)
+        CLOCKPAUSE = false;
+    else CLOCKPAUSE = true;
+};
 
 LightingScene.prototype.initCameras = function() {
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 30, 30), vec3.fromValues(0, 0, 0));
@@ -149,28 +159,37 @@ LightingScene.prototype.updateLights = function() {
         this.lights[i].update();
 }
 
-LightingScene.prototype.update = function(currTime){
+LightingScene.prototype.update = function(currTime) {
 
-    if(this.firstTime == 1){
-      this.lastTime = currTime;
-      this.firstTime=0;
+    if (this.firstTime == 1) {
+        this.lastTime = currTime;
+        this.firstTime = 0;
     }
 
-    if(this.firstTime==0){
-      this.lastTime = this.lastTime;
-      this.deltaTime = currTime - this.lastTime;
-      this.lastTime = currTime;
-      this.clock.update(this.deltaTime);
+    if (this.luz0)
+        this.lights[0].enable();
+    else this.lights[0].disable();
+
+    if (this.luz1)
+        this.lights[1].enable();
+    else this.lights[1].disable();
+
+    this.lastTime = this.lastTime || 0.0;
+    this.deltaTime = currTime - this.lastTime || 0.0;
+    this.lastTime = currTime;
+
+    if (!CLOCKPAUSE) {
+        this.clock.update(this.deltaTime);
     }
 
 }
 
 LightingScene.prototype.displaySub = function() {
-  this.pushMatrix();
-  this.translate(this.subX,0,this.subZ);
-  this.rotate(this.subAngle, 0, 1, 0);
-  this.submarine.display();
-  this.popMatrix();
+    this.pushMatrix();
+    this.translate(this.subX, 0, this.subZ);
+    this.rotate(this.subAngle, 0, 1, 0);
+    this.submarine.display();
+    this.popMatrix();
 }
 
 LightingScene.prototype.display = function() {
@@ -207,20 +226,20 @@ LightingScene.prototype.display = function() {
     // ---- BEGIN Primitive drawing section
 
     //PROJECT
-    this.gl.clearColor(0.047,0.086,0.156,1);
+    this.gl.clearColor(0.047, 0.086, 0.156, 1);
 
 
     //Clock
     this.pushMatrix();
     this.translate(8, 5, 0);
-    this.scale(0.5, 0.5, 0.17);
+    this.scale(0.7, 0.7, 0.17);
     this.clock.display();
     this.popMatrix();
 
     //Submarine
     this.pushMatrix();
-    this.translate(this.subX,0,this.subZ);
-    this.rotate(this.subAngle,0,1,0);
+    this.translate(this.subX, 0, this.subZ);
+    this.rotate(this.subAngle, 0, 1, 0);
     this.submarine.display();
     this.popMatrix();
 
@@ -243,25 +262,24 @@ LightingScene.prototype.display = function() {
     this.popMatrix();
 };
 
-LightingScene.prototype.move = function(keycode){
+LightingScene.prototype.move = function(keycode) {
 
-  switch (keycode)
-	{
-		case(97): //a
-      this.subAngle+=(2*Math.PI)/100;
-      break;
-		case(115): //s
-      this.subX=this.subX-0.1*Math.sin(this.subAngle);
-      this.subZ=this.subZ-0.1*Math.cos(this.subAngle);
-      break;
-		case(100): //d
-      this.subAngle-=(2*Math.PI)/100;
-      break;
-		case(119): //w
-      this.subX=this.subX+0.1*Math.sin(this.subAngle);
-      this.subZ=this.subZ+0.1*Math.cos(this.subAngle);
-      break;
-	};
+    switch (keycode) {
+        case (97): //a
+            this.subAngle += (2 * Math.PI) / 100;
+            break;
+        case (115): //s
+            this.subX = this.subX - 0.1 * Math.sin(this.subAngle);
+            this.subZ = this.subZ - 0.1 * Math.cos(this.subAngle);
+            break;
+        case (100): //d
+            this.subAngle -= (2 * Math.PI) / 100;
+            break;
+        case (119): //w
+            this.subX = this.subX + 0.1 * Math.sin(this.subAngle);
+            this.subZ = this.subZ + 0.1 * Math.cos(this.subAngle);
+            break;
+    };
 
-  this.displaySub();
-}
+    this.displaySub();
+};
