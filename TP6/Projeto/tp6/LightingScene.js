@@ -61,6 +61,12 @@ LightingScene.prototype.init = function(application) {
     this.materialB.setSpecular(0.8, 0.8, 0.8, 1);
     this.materialB.setShininess(120);
 
+    this.materialSubDefault = new CGFappearance(this);
+    this.materialSubDefault.setAmbient(0, 0, 0, 1);
+    this.materialSubDefault.setDiffuse(0.1, 0.1, 0.1, 1);
+    this.materialSubDefault.setSpecular(1, 1, 1, 1);
+    this.materialSubDefault.setShininess(100);
+
     //textures
     this.enableTextures(true);
 
@@ -108,7 +114,7 @@ LightingScene.prototype.init = function(application) {
 
     //tp6
     this.luz0 = true;
-    this.luz1 = false;
+    this.luz1 = true;
     this.speed = 3;
     CLOCKPAUSE = false;
 
@@ -240,6 +246,7 @@ LightingScene.prototype.display = function() {
     this.pushMatrix();
     this.translate(this.subX, 0, this.subZ);
     this.rotate(this.subAngle, 0, 1, 0);
+    this.materialSubDefault.apply();
     this.submarine.display();
     this.popMatrix();
 
