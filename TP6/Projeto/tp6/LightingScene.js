@@ -107,7 +107,7 @@ LightingScene.prototype.init = function(application) {
     //tp6
     this.option1=true; this.option2=false; this.speed=3;this.option1=true; this.option2=false; this.speed=3;
 
-
+    //submarine data
     this.subAngle=180*degToRad;
     this.subX=8;
     this.subZ=8;
@@ -165,6 +165,13 @@ LightingScene.prototype.update = function(currTime){
 
 }
 
+LightingScene.prototype.displaySub = function() {
+  this.pushMatrix();
+  this.translate(this.subX,0,this.subZ);
+  this.rotate(this.subAngle, 0, 1, 0);
+  this.submarine.display();
+  this.popMatrix();
+}
 
 LightingScene.prototype.display = function() {
     // ---- BEGIN Background, camera and axis setup
@@ -241,44 +248,20 @@ LightingScene.prototype.move = function(keycode){
   switch (keycode)
 	{
 		case(97): //a
-      console.log("Key 'a' pressed");
       this.subAngle+=(2*Math.PI)/100;
-      this.pushMatrix();
-      this.translate(this.subX,0,this.subZ);
-      this.rotate(this.subAngle, 0, 1, 0);
-      this.submarine.display();
-      this.popMatrix();
       break;
 		case(115): //s
-			console.log("Key 's' pressed");
       this.subX=this.subX-0.1*Math.sin(this.subAngle);
       this.subZ=this.subZ-0.1*Math.cos(this.subAngle);
-      this.pushMatrix();
-      this.translate(this.subX,0,this.subZ);
-      this.rotate(this.subAngle, 0, 1, 0);
-      this.submarine.display();
-      this.popMatrix();
       break;
 		case(100): //d
-			console.log("Key 'd' pressed");
       this.subAngle-=(2*Math.PI)/100;
-      this.pushMatrix();
-        this.translate(this.subX,0,this.subZ);
-      this.rotate(this.subAngle, 0, 1, 0);
-      this.submarine.display();
-      this.popMatrix();
       break;
 		case(119): //w
-			console.log("Key 'w' pressed");
       this.subX=this.subX+0.1*Math.sin(this.subAngle);
       this.subZ=this.subZ+0.1*Math.cos(this.subAngle);
-      this.pushMatrix();
-      this.translate(this.subX,0,this.subZ);
-      this.rotate(this.subAngle, 0, 1, 0);
-      this.submarine.display();
-      this.popMatrix();
       break;
 	};
 
-
+  this.displaySub();
 }
