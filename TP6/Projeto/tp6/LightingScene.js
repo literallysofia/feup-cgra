@@ -108,6 +108,9 @@ LightingScene.prototype.init = function(application) {
     this.option1=true; this.option2=false; this.speed=3;this.option1=true; this.option2=false; this.speed=3;
 
 
+    this.subAngle=180*degToRad;
+    this.subX=8;
+    this.subZ=8;
 };
 
 LightingScene.prototype.doSomething = function ()
@@ -162,6 +165,7 @@ LightingScene.prototype.update = function(currTime){
 
 }
 
+
 LightingScene.prototype.display = function() {
     // ---- BEGIN Background, camera and axis setup
 
@@ -195,79 +199,6 @@ LightingScene.prototype.display = function() {
 
     // ---- BEGIN Primitive drawing section
 
-    /*// Floor
-    this.pushMatrix();
-    this.floorAppearance.apply();
-    this.translate(7.5, 0, 7.5);
-    this.rotate(-90 * degToRad, 1, 0, 0);
-    this.scale(15, 15, 0.2);
-    this.floor.display();
-    this.popMatrix();
-
-    // Left Wall
-    this.pushMatrix();
-    this.translate(0, 4, 7.5);
-    this.rotate(90 * degToRad, 0, 1, 0);
-    this.scale(15, 8, 0.2);
-    this.windowAppearance.apply();
-    this.leftWall.display();
-    this.popMatrix();
-
-    // Plane Wall
-    this.pushMatrix();
-    this.translate(7.5, 4, 0);
-    this.scale(15, 8, 0.2);
-    this.materialDefault.apply();
-    this.wall.display();
-    this.popMatrix();
-
-    // First Table
-    this.pushMatrix();
-    this.translate(5, 0, 8);
-    this.table.display();
-    this.popMatrix();
-
-    // Second Table
-    this.pushMatrix();
-    this.translate(12, 0, 8);
-    this.table.display();
-    this.popMatrix();
-
-    // Board A
-    this.pushMatrix();
-    this.translate(4, 4.5, 0.2);
-    this.scale(BOARD_WIDTH, BOARD_HEIGHT, 1);
-    //this.materialA.apply();
-    this.slidesAppearance.apply();
-    this.boardA.display();
-    this.popMatrix();
-
-    // Board B
-    this.pushMatrix();
-    this.translate(10.5, 4.5, 0.2);
-    this.scale(BOARD_WIDTH, BOARD_HEIGHT, 1);
-    //this.materialB.apply();
-    this.boardAppearance.apply();
-    this.boardB.display();
-    this.popMatrix();
-
-    //Cylinder
-    this.pushMatrix();
-    this.scale(1, 8, 1);
-    this.translate(13, 0, 13);
-    this.rotate(-Math.PI / 2, 1, 0, 0);
-    this.cylinderAppearance.apply();
-    this.cylinder.display();
-    this.popMatrix();
-
-    //Clock
-    this.pushMatrix();
-    this.translate(7.25, 7.2, 0);
-    this.scale(0.5, 0.5, 0.17);
-    this.clock.display();
-    this.popMatrix();
-    // ---- END Primitive drawing section*/
-
     //PROJECT
     this.gl.clearColor(0.047,0.086,0.156,1);
 
@@ -281,8 +212,8 @@ LightingScene.prototype.display = function() {
 
     //Submarine
     this.pushMatrix();
-    this.translate(8,0,8);
-    this.rotate(180*degToRad,0,1,0);
+    this.translate(this.subX,0,this.subZ);
+    this.rotate(this.subAngle,0,1,0);
     this.submarine.display();
     this.popMatrix();
 
@@ -304,3 +235,50 @@ LightingScene.prototype.display = function() {
     this.stake.display();
     this.popMatrix();
 };
+
+LightingScene.prototype.move = function(keycode){
+
+  switch (keycode)
+	{
+		case(97): //a
+      console.log("Key 'a' pressed");
+      this.subAngle+=(2*Math.PI)/100;
+      this.pushMatrix();
+      this.translate(this.subX,0,this.subZ);
+      this.rotate(this.subAngle, 0, 1, 0);
+      this.submarine.display();
+      this.popMatrix();
+      break;
+		case(115): //s
+			console.log("Key 's' pressed");
+      this.subX=this.subX-0.1*Math.sin(this.subAngle);
+      this.subZ=this.subZ-0.1*Math.cos(this.subAngle);
+      this.pushMatrix();
+      this.translate(this.subX,0,this.subZ);
+      this.rotate(this.subAngle, 0, 1, 0);
+      this.submarine.display();
+      this.popMatrix();
+      break;
+		case(100): //d
+			console.log("Key 'd' pressed");
+      this.subAngle-=(2*Math.PI)/100;
+      this.pushMatrix();
+        this.translate(this.subX,0,this.subZ);
+      this.rotate(this.subAngle, 0, 1, 0);
+      this.submarine.display();
+      this.popMatrix();
+      break;
+		case(119): //w
+			console.log("Key 'w' pressed");
+      this.subX=this.subX+0.1*Math.sin(this.subAngle);
+      this.subZ=this.subZ+0.1*Math.cos(this.subAngle);
+      this.pushMatrix();
+      this.translate(this.subX,0,this.subZ);
+      this.rotate(this.subAngle, 0, 1, 0);
+      this.submarine.display();
+      this.popMatrix();
+      break;
+	};
+
+
+}
