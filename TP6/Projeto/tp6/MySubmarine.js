@@ -20,6 +20,12 @@
      this.topPeriscope = new MyCylinder(this.scene, 20,8);
      this.topPeriscope.initBuffers();
 
+     this.frontSemiSphere= new MySemiSphere(this.scene,20,20);
+     this.frontSemiSphere.initBuffers();
+
+     this.backSemiSphere= new MySemiSphere(this.scene,20,20);
+     this.backSemiSphere.initBuffers();
+
 
  };
 
@@ -30,8 +36,8 @@ MySubmarine.prototype.display = function() {
 
     //main cylinder
     this.scene.pushMatrix();
-    this.scene.scale(0.73, 1,4.08);
     this.scene.translate(0,1,0);
+    this.scene.scale(0.73, 1,4.08);
     this.mainCylinder.display();
     this.scene.popMatrix();
 
@@ -63,8 +69,22 @@ MySubmarine.prototype.display = function() {
     this.scene.pushMatrix();
     this.scene.scale(0.1, 0.1,0.3);
     this.scene.translate(0,39,10.68);
-    //this.scene.rotate(Math.PI/2,0,0,1);
     this.topPeriscope.display();
+    this.scene.popMatrix();
+
+    //front semiSphere
+    this.scene.pushMatrix();
+    this.scene.translate(0,1,4.05);
+    this.scene.scale(0.73, 1,1);
+    this.frontSemiSphere.display();
+    this.scene.popMatrix();
+
+    //back semiSphere
+    this.scene.pushMatrix();
+    this.scene.translate(0,1,0);
+    this.scene.scale(0.73, 1,1);
+    this.scene.rotate(Math.PI, 1,0,0)
+    this.backSemiSphere.display();
     this.scene.popMatrix();
 
 }

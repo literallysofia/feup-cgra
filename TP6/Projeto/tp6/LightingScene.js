@@ -37,6 +37,7 @@ LightingScene.prototype.init = function(application) {
     this.floor = new MyQuad(this, 0, 10, 0, 12);
     this.ocean = new Plane(this, 100, 0, 5, 0, 5);
     this.stake = new MyCylinder(this, 8, 20);
+    this.semiSphere = new MySemiSphere(this, 20, 20);
 
     this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25, 1.25, 0, 1);
     this.boardB = new Plane(this, BOARD_B_DIVISIONS);
@@ -267,6 +268,7 @@ LightingScene.prototype.display = function() {
     this.materialDefault.apply();
     this.stake.display();
     this.popMatrix();
+
 };
 
 LightingScene.prototype.move = function(keycode) {
