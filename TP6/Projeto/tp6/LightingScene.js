@@ -37,7 +37,6 @@ LightingScene.prototype.init = function(application) {
     this.floor = new MyQuad(this, 0, 10, 0, 12);
     this.ocean = new Plane(this, 100, 0, 5, 0, 5);
     this.stake = new MyCylinder(this, 8, 20);
-    this.semiSphere = new MySemiSphere(this, 20, 20);
 
     this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25, 1.25, 0, 1);
     this.boardB = new Plane(this, BOARD_B_DIVISIONS);
@@ -46,6 +45,8 @@ LightingScene.prototype.init = function(application) {
     this.clock = new MyClock(this);
 
     this.submarine = new MySubmarine(this);
+
+    this.trapeze= new MyTrapeze(this);
 
     // Materials
     this.materialDefault = new CGFappearance(this);
@@ -239,13 +240,13 @@ LightingScene.prototype.display = function() {
     //Clock
     this.pushMatrix();
     this.translate(8, 5, 0);
-    this.scale(0.7, 0.7, 0.17);
+    this.scale(1, 1, 0.17);
     this.clock.display();
     this.popMatrix();
 
     //Submarine
     this.pushMatrix();
-    this.translate(this.subX, 0, this.subZ);
+    this.translate(this.subX, 1.1, this.subZ);
     this.rotate(this.subAngle, 0, 1, 0);
     this.materialSubDefault.apply();
     this.submarine.display();

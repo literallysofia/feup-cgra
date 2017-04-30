@@ -17,8 +17,11 @@ function MyClock(scene) {
 
     this.materialDefault = new CGFappearance(this.scene);
 
-    this.circle = new MyCircle(this.scene, 12);
-    this.circle.initBuffers();
+    this.frontCircle = new MyCircle(this.scene, 12);
+    this.frontCircle.initBuffers();
+
+    this.backCircle = new MyCircle(this.scene, 12);
+    this.backCircle.initBuffers();
 
     this.secPointer = new MyClockHand(this.scene, 0.015,0.8);
     this.minPointer = new MyClockHand(this.scene, 0.03,0.8);
@@ -43,9 +46,15 @@ MyClock.prototype.display = function() {
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+    this.scene.rotate(Math.PI,0,1,0);
+    this.scene.translate(0, 0, 0);
+    this.backCircle.display();
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
     this.scene.translate(0, 0, 1);
     this.clockAppearance.apply();
-    this.circle.display();
+    this.frontCircle.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
