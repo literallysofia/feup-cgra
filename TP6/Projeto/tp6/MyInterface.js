@@ -49,6 +49,8 @@ MyInterface.prototype.init = function(application) {
 
     group.add(this.scene, 'luz0');
     group.add(this.scene, 'luz1');
+    group.add(this.scene, 'luz2');
+    group.add(this.scene, 'luz3');
 
     return true;
 };

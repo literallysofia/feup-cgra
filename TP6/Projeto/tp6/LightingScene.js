@@ -103,10 +103,10 @@ LightingScene.prototype.init = function(application) {
     //this.oceanAppearance.loadTexture("../resources/images/ocean.png");
     this.oceanAppearance.loadTexture("../resources/images/ocean2.png");
     this.oceanAppearance.setTextureWrap("REPEAT", "REPEAT");
-    this.oceanAppearance.setDiffuse(0.2, 0.2, 0.2, 1);
-    this.oceanAppearance.setSpecular(0.6, 0.6, 0.6, 1);
-    this.oceanAppearance.setShininess(10);
+    this.oceanAppearance.setDiffuse(0.3, 0.3, 0.3, 1);
+    this.oceanAppearance.setSpecular(0.4, 0.4, 0.4, 1);
     this.oceanAppearance.setAmbient(0.5, 0.5, 0.5, 1);
+    this.oceanAppearance.setShininess(10);
 
 
     //time
@@ -116,6 +116,8 @@ LightingScene.prototype.init = function(application) {
     //tp6
     this.luz0 = true;
     this.luz1 = true;
+    this.luz2 = true;
+    this.luz3 = true;
     this.speed = 3;
     CLOCKPAUSE = false;
 
@@ -141,16 +143,18 @@ LightingScene.prototype.initLights = function() {
     this.setGlobalAmbientLight(0.5, 0.5, 0.5, 1.0);
 
     // Positions for four lights
-    this.lights[0].setPosition(4, 6, 1, 1);
+
+    this.lights[0].setPosition(0, 0.3, 0, 1.0);
     this.lights[0].setVisible(true); // show marker on light position (different from enabled)
 
-    this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
+    this.lights[1].setPosition(0, 6, 0, 1);
     this.lights[1].setVisible(true); // show marker on light position (different from enabled)
 
-    this.lights[2].setPosition(10.5, 6.0, 5.0, 1.0);
-    this.lights[1].setVisible(true); // show marker on light position (different from enabled)
-    this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
-    this.lights[1].setVisible(true); // show marker on light position (different from enabled)
+    this.lights[2].setPosition(16, 6, 0, 1.0);
+    this.lights[2].setVisible(true); // show marker on light position (different from enabled)
+
+    this.lights[3].setPosition(0, 6, 15, 1.0);
+    this.lights[3].setVisible(true); // show marker on light position (different from enabled)
 
     this.lights[0].setAmbient(0, 0, 0, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
@@ -159,6 +163,14 @@ LightingScene.prototype.initLights = function() {
     this.lights[1].setAmbient(0, 0, 0, 1);
     this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
     this.lights[1].enable();
+
+    this.lights[2].setAmbient(0, 0, 0, 1);
+    this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.lights[2].enable();
+
+    this.lights[3].setAmbient(0, 0, 0, 1);
+    this.lights[3].setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.lights[3].enable();
 };
 
 LightingScene.prototype.updateLights = function() {
@@ -180,6 +192,14 @@ LightingScene.prototype.update = function(currTime) {
     if (this.luz1)
         this.lights[1].enable();
     else this.lights[1].disable();
+
+    if (this.luz2)
+        this.lights[2].enable();
+    else this.lights[2].disable();
+
+    if (this.luz3)
+        this.lights[3].enable();
+    else this.lights[3].disable();
 
     this.lastTime = this.lastTime || 0.0;
     this.deltaTime = currTime - this.lastTime || 0.0;
