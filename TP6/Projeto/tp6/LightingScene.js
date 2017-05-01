@@ -78,7 +78,6 @@ LightingScene.prototype.init = function(application) {
     this.cylinderAppearance.setAmbient(0.5, 0.5, 0.5, 1);
 
     this.oceanAppearance = new CGFappearance(this);
-    //this.oceanAppearance.loadTexture("../resources/images/ocean.png");
     this.oceanAppearance.loadTexture("../resources/images/ocean2.png");
     this.oceanAppearance.setTextureWrap("REPEAT", "REPEAT");
     this.oceanAppearance.setDiffuse(0.3, 0.3, 0.3, 1);
@@ -86,18 +85,53 @@ LightingScene.prototype.init = function(application) {
     this.oceanAppearance.setAmbient(0.5, 0.5, 0.5, 1);
     this.oceanAppearance.setShininess(10);
 
+    this.blueMetal = new CGFappearance(this);
+    this.blueMetal.loadTexture("../resources/images/sub1.jpg");
+    this.blueMetal.setTextureWrap("REPEAT", "REPEAT");
+    this.blueMetal.setAmbient(0.5, 0.5, 0.5, 1);
+    this.blueMetal.setDiffuse(0.5, 0.5, 0.5, 1);
+    this.blueMetal.setSpecular(1, 1, 1, 1);
+
+    this.darkMetal = new CGFappearance(this);
+    this.darkMetal.loadTexture("../resources/images/sub2.jpg");
+    this.darkMetal.setTextureWrap("REPEAT", "REPEAT");
+    this.darkMetal.setAmbient(0.5, 0.5, 0.5, 1);
+    this.darkMetal.setDiffuse(0.5, 0.5, 0.5, 1);
+    this.darkMetal.setSpecular(1, 1, 1, 1);
+
+    this.greyMetal = new CGFappearance(this);
+    this.greyMetal.loadTexture("../resources/images/sub3.jpg");
+    this.greyMetal.setTextureWrap("REPEAT", "REPEAT");
+    this.greyMetal.setAmbient(0.5, 0.5, 0.5, 1);
+    this.greyMetal.setDiffuse(0.5, 0.5, 0.5, 1);
+    this.greyMetal.setSpecular(1, 1, 1, 1);
+
+    this.lightMetal = new CGFappearance(this);
+    this.lightMetal.loadTexture("../resources/images/sub4.jpg");
+    this.lightMetal.setTextureWrap("REPEAT", "REPEAT");
+    this.lightMetal.setAmbient(0.5, 0.5, 0.5, 1);
+    this.lightMetal.setDiffuse(0.5, 0.5, 0.5, 1);
+    this.lightMetal.setSpecular(1, 1, 1, 1);
+
+
+    this.submarineAppearances = [this.blueMetal, this.darkMetal, this.greyMetal, this.lightMetal];
+    this.submarineAppearancesList = {'blueMetal':0, 'darkMetal':1, 'greyMetal':2, 'lightMetal':3}
+    this.submarineTexture='darkMetal';
+    this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
 
     //time
     this.firstTime = 1;
     this.setUpdatePeriod(100);
 
-    //tp6
+    //gui
     this.luz0 = true;
     this.luz1 = true;
     this.luz2 = true;
     this.luz3 = true;
     this.speed = 3;
     CLOCKPAUSE = false;
+
+
 
     //submarine data
     this.subAngle = 180 * degToRad;
@@ -187,6 +221,8 @@ LightingScene.prototype.update = function(currTime) {
         this.clock.update(this.deltaTime);
     }
 
+    this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
+
 }
 
 LightingScene.prototype.displaySub = function() {
@@ -259,9 +295,11 @@ LightingScene.prototype.display = function() {
     this.pushMatrix();
     this.translate(this.subX, 1.1, this.subZ);
     this.rotate(this.subAngle, 0, 1, 0);
-    this.materialSubDefault.apply();
+    //this.materialSubDefault.apply();
+    this.submarineAppearances[this.currSubmarineAppearance].apply();
     this.submarine.display();
     this.popMatrix();
+
 
 };
 
