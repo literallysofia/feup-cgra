@@ -31,35 +31,13 @@ LightingScene.prototype.init = function(application) {
     this.axis = new CGFaxis(this);
 
     // Scene elements
-    this.table = new MyTable(this);
-    this.wall = new Plane(this);
-    this.leftWall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);
-    this.floor = new MyQuad(this, 0, 10, 0, 12);
     this.ocean = new Plane(this, 100, 0, 4, 0, 4);
     this.stake = new MyCylinder(this, 8, 20);
-
-    this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25, 1.25, 0, 1);
-    this.boardB = new Plane(this, BOARD_B_DIVISIONS);
-
-    this.cylinder = new MyCylinder(this, 8, 20);
     this.clock = new MyClock(this);
-
     this.submarine = new MySubmarine(this);
 
     // Materials
     this.materialDefault = new CGFappearance(this);
-
-    this.materialA = new CGFappearance(this);
-    this.materialA.setAmbient(0.3, 0.3, 0.3, 1);
-    this.materialA.setDiffuse(0.6, 0.6, 0.6, 1);
-    this.materialA.setSpecular(0.2, 0.2, 0.2, 1);
-    this.materialA.setShininess(10);
-
-    this.materialB = new CGFappearance(this);
-    this.materialB.setAmbient(0.3, 0.3, 0.3, 1);
-    this.materialB.setDiffuse(0.6, 0.6, 0.6, 1);
-    this.materialB.setSpecular(0.8, 0.8, 0.8, 1);
-    this.materialB.setShininess(120);
 
     this.materialSubDefault = new CGFappearance(this);
     this.materialSubDefault.setAmbient(0, 0, 0, 1);
@@ -67,7 +45,7 @@ LightingScene.prototype.init = function(application) {
     this.materialSubDefault.setSpecular(1, 1, 1, 1);
     this.materialSubDefault.setShininess(100);
 
-    //textures
+    // Textures
     this.enableTextures(true);
 
     this.floorAppearance = new CGFappearance(this);
@@ -245,14 +223,10 @@ LightingScene.prototype.display = function() {
     // ---- END Background, camera and axis setup
 
 
-    // ---- BEGIN Geometric transformation section
-
-    // ---- END Geometric transformation section
 
 
     // ---- BEGIN Primitive drawing section
 
-    //PROJECT
     //this.gl.clearColor(0.047, 0.086, 0.156, 1); //dark blue
     this.gl.clearColor(0.094, 0.196, 0.278, 1); //light blue
 
@@ -263,7 +237,7 @@ LightingScene.prototype.display = function() {
     this.clock.display();
     this.popMatrix();
 
-    //stake
+    //Stake
     this.pushMatrix();
     this.translate(8, 0, 0.05);
     this.scale(0.05, 5, 0.05);
@@ -271,7 +245,6 @@ LightingScene.prototype.display = function() {
     this.materialDefault.apply();
     this.stake.display();
     this.popMatrix();
-
 
     //Ocean
     this.pushMatrix();
