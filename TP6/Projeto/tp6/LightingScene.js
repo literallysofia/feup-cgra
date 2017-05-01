@@ -35,7 +35,7 @@ LightingScene.prototype.init = function(application) {
     this.wall = new Plane(this);
     this.leftWall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);
     this.floor = new MyQuad(this, 0, 10, 0, 12);
-    this.ocean = new Plane(this, 100, 0, 5, 0, 5);
+    this.ocean = new Plane(this, 100, 0, 4, 0, 4);
     this.stake = new MyCylinder(this, 8, 20);
 
     this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25, 1.25, 0, 1);
@@ -100,7 +100,8 @@ LightingScene.prototype.init = function(application) {
     this.cylinderAppearance.setAmbient(0.5, 0.5, 0.5, 1);
 
     this.oceanAppearance = new CGFappearance(this);
-    this.oceanAppearance.loadTexture("../resources/images/ocean.png");
+    //this.oceanAppearance.loadTexture("../resources/images/ocean.png");
+    this.oceanAppearance.loadTexture("../resources/images/ocean2.png");
     this.oceanAppearance.setTextureWrap("REPEAT", "REPEAT");
     this.oceanAppearance.setDiffuse(0.2, 0.2, 0.2, 1);
     this.oceanAppearance.setSpecular(0.6, 0.6, 0.6, 1);
@@ -232,23 +233,14 @@ LightingScene.prototype.display = function() {
     // ---- BEGIN Primitive drawing section
 
     //PROJECT
-    this.gl.clearColor(0.047, 0.086, 0.156, 1);
-
+    //this.gl.clearColor(0.047, 0.086, 0.156, 1); //dark blue
+    this.gl.clearColor(0.094, 0.196, 0.278, 1); //light blue
 
     //Clock
     this.pushMatrix();
     this.translate(8, 5, 0);
     this.scale(1, 1, 0.17);
     this.clock.display();
-    this.popMatrix();
-
-    //Ocean
-    this.pushMatrix();
-    this.translate(8, 0, 8);
-    this.rotate(-90 * degToRad, 1, 0, 0);
-    this.scale(16, 16, 0.2);
-    this.oceanAppearance.apply();
-    this.ocean.display();
     this.popMatrix();
 
     //stake
@@ -258,6 +250,16 @@ LightingScene.prototype.display = function() {
     this.rotate(-Math.PI / 2, 1, 0, 0);
     this.materialDefault.apply();
     this.stake.display();
+    this.popMatrix();
+
+
+    //Ocean
+    this.pushMatrix();
+    this.translate(8, 0, 8);
+    this.rotate(-90 * degToRad, 1, 0, 0);
+    this.scale(16, 16, 0.2);
+    this.oceanAppearance.apply();
+    this.ocean.display();
     this.popMatrix();
 
     //Submarine

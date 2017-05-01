@@ -2,11 +2,12 @@
  * MyCylinder
  * @constructor
  */
- function MyCylinder(scene, slices, stacks) {
+ function MyCylinder(scene, slices, stacks, twoSides) {
  	CGFobject.call(this,scene);
 
 	this.slices = slices;
 	this.stacks = stacks;
+  this.twoSides = twoSides || false;
 
  	this.initBuffers();
  };
@@ -63,6 +64,20 @@
    else {
      this.indices.push(i, i+1, i+1+this.slices);
      this.indices.push(i, i+1+this.slices, i+this.slices);
+   }
+ }
+
+ if(this.twoSides == true){
+
+   for (let i =0; i < numPontos; i++ ){
+      if((i+1)%this.slices==0){
+       this.indices.push(i+1,i+1-this.slices, i);
+       this.indices.push(i+this.slices, i+1,i);
+     }
+     else {
+       this.indices.push(i+1+this.slices,i+1, i);
+       this.indices.push(i+this.slices, i+1+this.slices, i);
+     }
    }
  }
 

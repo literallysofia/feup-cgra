@@ -5,19 +5,19 @@
  function MySubmarine(scene) {
      CGFobject.call(this, scene);
 
-     this.mainCylinder = new MyCylinder (this.scene,20,8);
+     this.mainCylinder = new MyCylinder (this.scene,20,20);
      this.mainCylinder.initBuffers();
 
-     this.topCylinder = new MyCylinder (this.scene,20,8);
+     this.topCylinder = new MyCylinder (this.scene,20,20);
      this.topCylinder.initBuffers();
 
      this.topCircle = new MyCircle (this.scene, 20);
      this.topCircle.initBuffers();
 
-     this.mainPeriscope = new MyCylinder (this.scene, 20, 8);
+     this.mainPeriscope = new MyCylinder (this.scene, 20, 20);
      this.mainPeriscope.initBuffers();
 
-     this.topPeriscope = new MyCylinder(this.scene, 20,8);
+     this.topPeriscope = new MyCylinder(this.scene, 20,20);
      this.topPeriscope.initBuffers();
 
      this.frontSemiSphere= new MySemiSphere(this.scene,20,20);
@@ -32,9 +32,14 @@
      this.horizontalTrapeze=new MyTrapeze(this.scene);
      this.horizontalTrapeze.initBuffers();
 
-
      this.horizontalTrapezeFront = new MyTrapeze(this.scene);
      this.horizontalTrapezeFront.initBuffers();
+
+     this.rightPropeller = new MyPropeller(this.scene);
+     this.rightPropeller.initBuffers();
+
+     this.leftPropeller = new MyPropeller(this.scene);
+     this.leftPropeller.initBuffers();
 
  };
 
@@ -115,7 +120,6 @@ MySubmarine.prototype.display = function() {
     this.horizontalTrapeze.display();
     this.scene.popMatrix();
 
-
     //front horizontal trapeze
     this.scene.pushMatrix();
     this.scene.translate(0,2,3);
@@ -126,5 +130,20 @@ MySubmarine.prototype.display = function() {
     this.scene.rotate(Math.PI/2, 0,0,1);
     this.horizontalTrapezeFront.display();
     this.scene.popMatrix();
+
+    //rightPropeller
+    this.scene.pushMatrix();
+    this.scene.translate(-1,0.5,0);
+    this.scene.scale(0.4,0.4,0.5);
+    this.rightPropeller.display();
+    this.scene.popMatrix();
+
+    //leftPropeller
+    this.scene.pushMatrix();
+    this.scene.translate(1,0.5,0);
+    this.scene.scale(0.4,0.4,0.5);
+    this.leftPropeller.display();
+    this.scene.popMatrix();
+
 
 }
