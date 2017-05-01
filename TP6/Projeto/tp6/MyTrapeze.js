@@ -7,16 +7,14 @@ function MyTrapeze(scene) {
     CGFobject.call(this, scene);
 
 
-    this.triangularPrism = new MyTriangularPrism(this.scene);
-    this.triangularPrism.initBuffers();
+    this.triangularPrismRight = new MyTriangularPrism(this.scene);
+    this.triangularPrismRight.initBuffers();
 
-    this.cubeRight = new MyUnitCubeQuad(this.scene);
-    this.cubeRight.initBuffers();
+    this.cube = new MyUnitCubeQuad(this.scene);
+    this.cube.initBuffers();
 
-    this.cubeLeft = new MyUnitCubeQuad(this.scene);
-    this.cubeLeft = new MyUnitCubeQuad(this.scene);
-
-
+    this.triangularPrismLeft = new MyTriangularPrism(this.scene);
+    this.triangularPrismLeft.initBuffers();
 
 };
 
@@ -27,16 +25,19 @@ MyTrapeze.prototype.display = function() {
 
     this.scene.pushMatrix();
     this.scene.translate(2,0,0);
-    this.triangularPrism.display();
+    this.triangularPrismRight.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
-    this.scene.translate(1.5,0.5,0.5)
-    this.cubeRight.display();
+    this.scene.translate(-2,0,1);
+    this.scene.rotate(-Math.PI, 0,1,0);
+    this.triangularPrismLeft.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
-    this.scene.translate(0.5,0.5,0.5)
-    this.cubeLeft.display();
+    this.scene.translate(0,0.5,0.5)
+    this.scene.scale(4,1,1);
+    this.cube.display();
     this.scene.popMatrix();
+
 }

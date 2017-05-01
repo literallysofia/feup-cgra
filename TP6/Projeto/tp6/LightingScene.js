@@ -46,8 +46,6 @@ LightingScene.prototype.init = function(application) {
 
     this.submarine = new MySubmarine(this);
 
-    this.trapeze= new MyTrapeze(this);
-
     // Materials
     this.materialDefault = new CGFappearance(this);
 
@@ -244,14 +242,6 @@ LightingScene.prototype.display = function() {
     this.clock.display();
     this.popMatrix();
 
-    //Submarine
-    this.pushMatrix();
-    this.translate(this.subX, 1.1, this.subZ);
-    this.rotate(this.subAngle, 0, 1, 0);
-    this.materialSubDefault.apply();
-    this.submarine.display();
-    this.popMatrix();
-
     //Ocean
     this.pushMatrix();
     this.translate(8, 0, 8);
@@ -268,6 +258,14 @@ LightingScene.prototype.display = function() {
     this.rotate(-Math.PI / 2, 1, 0, 0);
     this.materialDefault.apply();
     this.stake.display();
+    this.popMatrix();
+
+    //Submarine
+    this.pushMatrix();
+    this.translate(this.subX, 1.1, this.subZ);
+    this.rotate(this.subAngle, 0, 1, 0);
+    this.materialSubDefault.apply();
+    this.submarine.display();
     this.popMatrix();
 
 };

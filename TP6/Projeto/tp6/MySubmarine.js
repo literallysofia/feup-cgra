@@ -26,23 +26,15 @@
      this.backSemiSphere= new MySemiSphere(this.scene,20,20);
      this.backSemiSphere.initBuffers();
 
-     this.trapezeTop=new MyTrapeze(this.scene);
-     this.trapezeTop.initBuffers();
+     this.verticalTrapeze=new MyTrapeze(this.scene);
+     this.verticalTrapeze.initBuffers();
 
-     this.trapezeDown=new MyTrapeze(this.scene);
-     this.trapezeDown.initBuffers();
+     this.horizontalTrapeze=new MyTrapeze(this.scene);
+     this.horizontalTrapeze.initBuffers();
 
-     this.backTrapezeLeft = new MyTrapeze(this.scene);
-     this.backTrapezeLeft.initBuffers();
 
-     this.backTrapezeRight = new MyTrapeze(this.scene);
-     this.backTrapezeRight.initBuffers();
-
-     this.frontTrapezeLeft = new MyTrapeze(this.scene);
-     this.frontTrapezeLeft.initBuffers();
-
-     this.frontTrapezeRight = new MyTrapeze(this.scene);
-     this.frontTrapezeRight.initBuffers();
+     this.horizontalTrapezeFront = new MyTrapeze(this.scene);
+     this.horizontalTrapezeFront.initBuffers();
 
  };
 
@@ -104,63 +96,35 @@ MySubmarine.prototype.display = function() {
     this.backSemiSphere.display();
     this.scene.popMatrix();
 
-    //trapeze top
+    //vertical trapeze
     this.scene.pushMatrix();
-    this.scene.scale(0.1,0.4,0.4);
-    this.scene.translate(0,4.5,-1.2);
+    this.scene.scale(0.1,0.6,0.4);
+    this.scene.translate(0,1.6,-1.2);
     this.scene.rotate(Math.PI/2,0,1,0);
     this.scene.rotate(Math.PI/2, 0,0,1);
-    this.trapezeTop.display();
+    this.verticalTrapeze.display();
     this.scene.popMatrix();
 
-    //trapeze top
+    //horizontal trapeze
     this.scene.pushMatrix();
-    this.scene.rotate(Math.PI,0,0,1);
-    this.scene.scale(0.1,0.4,0.4);
-    this.scene.translate(0,-0.7,-1.2);
-    this.scene.rotate(Math.PI/2,0,1,0);
-    this.scene.rotate(Math.PI/2, 0,0,1);
-    this.trapezeDown.display();
-    this.scene.popMatrix();
-
-    //back trapeze right
-    this.scene.pushMatrix();
-    this.scene.translate(-0.5,1,-0.5);
+    this.scene.translate(0,1,-0.5);
     this.scene.rotate(Math.PI/2,0,0,1);
-    this.scene.scale(0.1,0.4,0.4);
+    this.scene.scale(0.1,0.6,0.4);
     this.scene.rotate(Math.PI/2,0,1,0);
     this.scene.rotate(Math.PI/2, 0,0,1);
-    this.backTrapezeRight.display();
+    this.horizontalTrapeze.display();
     this.scene.popMatrix();
 
-    //back trapeze left
-    this.scene.pushMatrix();
-    this.scene.translate(0.5,1,-0.5);
-    this.scene.rotate(-Math.PI/2,0,0,1);
-    this.scene.scale(0.1,0.4,0.4);
-    this.scene.rotate(Math.PI/2,0,1,0);
-    this.scene.rotate(Math.PI/2, 0,0,1);
-    this.backTrapezeLeft.display();
-    this.scene.popMatrix();
 
-    //front trapeze right
+    //front horizontal trapeze
     this.scene.pushMatrix();
-    this.scene.translate(-0.5,2.2,2.5);
+    this.scene.translate(0,2,3);
+    this.scene.rotate(Math.PI,1,0,0);
     this.scene.rotate(Math.PI/2,0,0,1);
-    this.scene.scale(0.05,0.3,0.3);
+    this.scene.scale(0.05,0.4,0.4);
     this.scene.rotate(Math.PI/2,0,1,0);
     this.scene.rotate(Math.PI/2, 0,0,1);
-    this.frontTrapezeRight.display();
-    this.scene.popMatrix();
-
-    //front trapeze left
-    this.scene.pushMatrix();
-    this.scene.translate(0.5,2.2,2.5);
-    this.scene.rotate(-Math.PI/2,0,0,1);
-    this.scene.scale(0.05,0.3,0.3);
-    this.scene.rotate(Math.PI/2,0,1,0);
-    this.scene.rotate(Math.PI/2, 0,0,1);
-    this.frontTrapezeLeft.display();
+    this.horizontalTrapezeFront.display();
     this.scene.popMatrix();
 
 }
