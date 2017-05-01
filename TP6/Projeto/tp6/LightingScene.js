@@ -116,7 +116,7 @@ LightingScene.prototype.init = function(application) {
 
     this.submarineAppearances = [this.blueMetal, this.darkMetal, this.greyMetal, this.lightMetal];
     this.submarineAppearancesList = {'blueMetal':0, 'darkMetal':1, 'greyMetal':2, 'lightMetal':3}
-    this.submarineTexture='darkMetal';
+    this.submarineTexture='greyMetal';
     this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
 
     //time
