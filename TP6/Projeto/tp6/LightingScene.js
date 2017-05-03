@@ -142,6 +142,7 @@ LightingScene.prototype.init = function(application) {
     this.subAngle = 180 * degToRad;
     this.subX = 8;
     this.subZ = 8;
+    this.subVelocity = 0;
 };
 
 LightingScene.prototype.animacaoRelogio = function() {
@@ -230,14 +231,6 @@ LightingScene.prototype.update = function(currTime) {
 
 }
 
-LightingScene.prototype.displaySub = function() {
-    this.pushMatrix();
-    this.translate(this.subX, 0, this.subZ);
-    this.rotate(this.subAngle, 0, 1, 0);
-    this.submarine.display();
-    this.popMatrix();
-}
-
 LightingScene.prototype.display = function() {
     // ---- BEGIN Background, camera and axis setup
 
@@ -297,6 +290,8 @@ LightingScene.prototype.display = function() {
     this.popMatrix();
 
     //Submarine
+    this.updateSubmarine();
+
     this.pushMatrix();
     this.translate(this.subX, 1.1, this.subZ);
     this.rotate(this.subAngle, 0, 1, 0);
@@ -315,15 +310,17 @@ LightingScene.prototype.move = function(keycode) {
             this.subAngle += (2 * Math.PI) / 100;
             break;
         case (115): //s
-            this.subX = this.subX - 0.1 * Math.sin(this.subAngle);
-            this.subZ = this.subZ - 0.1 * Math.cos(this.subAngle);
+            this.subVelocity = this.subVelocity - 0.05;
+            //this.subX = this.subX - 0.1 * Math.sin(this.subAngle);
+            //this.subZ = this.subZ - 0.1 * Math.cos(this.subAngle);
             break;
         case (100): //d
             this.subAngle -= (2 * Math.PI) / 100;
             break;
         case (119): //w
-            this.subX = this.subX + 0.1 * Math.sin(this.subAngle);
-            this.subZ = this.subZ + 0.1 * Math.cos(this.subAngle);
+            this.subVelocity = this.subVelocity + 0.05;
+            //this.subX = this.subX + 0.1 * Math.sin(this.subAngle);
+            //this.subZ = this.subZ + 0.1 * Math.cos(this.subAngle);
             break;
         case (112): //p
             this.submarine.updatePeriscopeMove(keycode);
@@ -333,5 +330,11 @@ LightingScene.prototype.move = function(keycode) {
             break;
     };
 
-    this.displaySub();
+};
+
+LightingScene.prototype.updateSubmarine = function() {
+
+    this.subX = this.subX + this.subVelocity * Math.sin(this.subAngle);
+    this.subZ = this.subZ + this.subVelocity * Math.cos(this.subAngle);
+
 };
