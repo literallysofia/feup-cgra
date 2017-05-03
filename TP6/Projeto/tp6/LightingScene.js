@@ -115,8 +115,13 @@ LightingScene.prototype.init = function(application) {
 
 
     this.submarineAppearances = [this.blueMetal, this.darkMetal, this.greyMetal, this.lightMetal];
-    this.submarineAppearancesList = {'blueMetal':0, 'darkMetal':1, 'greyMetal':2, 'lightMetal':3}
-    this.submarineTexture='greyMetal';
+    this.submarineAppearancesList = {
+        'blueMetal': 0,
+        'darkMetal': 1,
+        'greyMetal': 2,
+        'lightMetal': 3
+    }
+    this.submarineTexture = 'greyMetal';
     this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
 
     //time
@@ -319,6 +324,12 @@ LightingScene.prototype.move = function(keycode) {
         case (119): //w
             this.subX = this.subX + 0.1 * Math.sin(this.subAngle);
             this.subZ = this.subZ + 0.1 * Math.cos(this.subAngle);
+            break;
+        case (112): //p
+            this.submarine.updatePeriscopeMove(keycode);
+            break;
+        case (108): //l
+            this.submarine.updatePeriscopeMove(keycode);
             break;
     };
 
