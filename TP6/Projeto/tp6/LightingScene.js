@@ -121,12 +121,12 @@ LightingScene.prototype.init = function(application) {
         'greyMetal': 2,
         'lightMetal': 3
     }
-    this.submarineTexture = 'greyMetal';
+    this.submarineTexture = 'darkMetal';
     this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
 
     //time
     this.firstTime = 1;
-    this.setUpdatePeriod(100);
+    this.setUpdatePeriod(10);
 
     //gui
     this.luz0 = true;
@@ -228,6 +228,8 @@ LightingScene.prototype.update = function(currTime) {
     }
 
     this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
+
+    this.submarine.updatePropeller(this.deltaTime, this.subVelocity);
 
 }
 

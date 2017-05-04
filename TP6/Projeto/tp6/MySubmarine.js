@@ -136,7 +136,7 @@ MySubmarine.prototype.display = function() {
     this.leftPropeller.display();
     this.scene.popMatrix();
 
-}
+};
 
 MySubmarine.prototype.updatePeriscopeMove = function(keycode) {
 
@@ -148,7 +148,7 @@ MySubmarine.prototype.updatePeriscopeMove = function(keycode) {
             this.periscopeMove = -1;
             break;
     };
-}
+};
 
 MySubmarine.prototype.updatePeriscope = function() {
 
@@ -170,4 +170,13 @@ MySubmarine.prototype.updatePeriscope = function() {
 
             break;
     };
-}
+};
+
+MySubmarine.prototype.updatePropeller = function(deltaTime, velocity) {
+
+    let time = deltaTime / 1000;
+    var ang = time * 360 * velocity / 0.05;
+    this.rightPropeller.updateRotation(ang);
+    this.leftPropeller.updateRotation(-ang);
+
+};
