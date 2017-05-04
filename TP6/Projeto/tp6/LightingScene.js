@@ -310,17 +310,19 @@ LightingScene.prototype.move = function(keycode) {
     switch (keycode) {
         case (97): //a
             this.subAngle += (2 * Math.PI) / 100;
+            this.submarine.activateVerticalTrapezes(1);
             break;
         case (115): //s
-            this.subVelocity = this.subVelocity - 0.05;
+            this.subVelocity -= 0.05;
             //this.subX = this.subX - 0.1 * Math.sin(this.subAngle);
             //this.subZ = this.subZ - 0.1 * Math.cos(this.subAngle);
             break;
         case (100): //d
             this.subAngle -= (2 * Math.PI) / 100;
+            this.submarine.activateVerticalTrapezes(2);
             break;
         case (119): //w
-            this.subVelocity = this.subVelocity + 0.05;
+            this.subVelocity += 0.05;
             //this.subX = this.subX + 0.1 * Math.sin(this.subAngle);
             //this.subZ = this.subZ + 0.1 * Math.cos(this.subAngle);
             break;
@@ -336,7 +338,7 @@ LightingScene.prototype.move = function(keycode) {
 
 LightingScene.prototype.updateSubmarine = function() {
 
-    this.subX = this.subX + this.subVelocity * Math.sin(this.subAngle);
-    this.subZ = this.subZ + this.subVelocity * Math.cos(this.subAngle);
+    this.subX += this.subVelocity * Math.sin(this.subAngle);
+    this.subZ += this.subVelocity * Math.cos(this.subAngle);
 
 };

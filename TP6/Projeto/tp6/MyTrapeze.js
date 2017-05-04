@@ -40,4 +40,4 @@ MyTrapeze.prototype.display = function() {
     this.cube.display();
     this.scene.popMatrix();
 
-}
+};

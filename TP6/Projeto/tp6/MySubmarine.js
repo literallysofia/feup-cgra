@@ -41,6 +41,13 @@ function MySubmarine(scene) {
     //periscope data
     this.periscopeY = 2;
     this.periscopeMove = 0; //0 neutro, 1 cima, -1 baixo
+
+    //trapezes data
+    this.resetPosition = false;
+
+    this.verticalTrapezeMove = false;
+    this.verticalTrapezeDirection = 0;
+    this.verticalTrapezeAngle = 0;
 };
 
 MySubmarine.prototype = Object.create(CGFobject.prototype);
@@ -96,7 +103,11 @@ MySubmarine.prototype.display = function() {
     this.scene.popMatrix();
 
     //vertical trapeze
+    if (this.verticalTrapezeMove)
+        this.updateVerticalTrapezes();
+
     this.scene.pushMatrix();
+    this.scene.rotate(this.verticalTrapezeAngle, 0, 1, 0);
     this.scene.translate(0, 1, -0.5);
     this.scene.scale(0.1, 0.6, 0.4);
     this.scene.rotate(Math.PI / 2, 0, 1, 0);
@@ -158,7 +169,7 @@ MySubmarine.prototype.updatePeriscope = function() {
             if (this.periscopeY > 2)
                 this.periscopeMove = 0;
             else
-                this.periscopeY = this.periscopeY + 0.05;
+                this.periscopeY += 0.05;
 
             break;
         case (-1): //l valor minimo
@@ -166,7 +177,7 @@ MySubmarine.prototype.updatePeriscope = function() {
             if (this.periscopeY < 1)
                 this.periscopeMove = 0;
             else
-                this.periscopeY = this.periscopeY - 0.05;
+                this.periscopeY -= 0.05;
 
             break;
     };
@@ -178,5 +189,80 @@ MySubmarine.prototype.updatePropeller = function(deltaTime, velocity) {
     var ang = time * 360 * velocity / 0.05;
     this.rightPropeller.updateRotation(ang);
     this.leftPropeller.updateRotation(-ang);
+
+};
+
+MySubmarine.prototype.updateVerticalTrapezes = function() {
+
+    if (this.resetPosition) {
+
+        switch (this.verticalTrapezeDirection) {
+            case (1): //clicou em a
+
+                if (this.verticalTrapezeAngle < 0)
+                    this.verticalTrapezeMove = false;
+                else
+                    this.verticalTrapezeAngle -= (2 * Math.PI) / 100;
+
+                break;
+            case (-1): //clicou em d
+
+                if (this.verticalTrapezeAngle > 0)
+                    this.verticalTrapezeMove = false;
+                else
+                    this.verticalTrapezeAngle += (2 * Math.PI) / 100;
+
+                break;
+        };
+
+    } else {
+
+        switch (this.verticalTrapezeDirection) {
+            case (1): //clicou em a
+
+                if (this.verticalTrapezeAngle > (45 * Math.PI / 180))
+                    this.verticalTrapezeMove = false;
+                else
+                    this.verticalTrapezeAngle += (2 * Math.PI) / 100;
+
+                break;
+            case (-1): //clicou em d
+
+                if (this.verticalTrapezeAngle < -(45 * Math.PI / 180))
+                    this.verticalTrapezeMove = false;
+                else
+                    this.verticalTrapezeAngle -= (2 * Math.PI) / 100;
+
+                break;
+        };
+
+    }
+
+};
+
+MySubmarine.prototype.activateVerticalTrapezes = function(direction) {
+
+    switch (direction) {
+        case (1): //clicou em a
+
+            this.verticalTrapezeDirection = 1;
+
+            break;
+        case (2): //clicou em d
+
+            this.verticalTrapezeDirection = -1;
+
+            break;
+    };
+
+    this.verticalTrapezeMove = 1;
+    this.resetPosition = false;
+
+};
+
+MySubmarine.prototype.activateResetPosition = function() {
+
+    this.resetPosition = true;
+    this.verticalTrapezeMove = true;
 
 };

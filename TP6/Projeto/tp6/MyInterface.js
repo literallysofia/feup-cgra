@@ -53,7 +53,7 @@ MyInterface.prototype.init = function(application) {
     group.add(this.scene, 'luz3');
 
     //this.gui.add(this.scene, 'submarineTexture');
-    this.gui.add(this.scene,'submarineTexture', ['blueMetal', 'darkMetal', 'greyMetal', 'lightMetal']);
+    this.gui.add(this.scene, 'submarineTexture', ['blueMetal', 'darkMetal', 'greyMetal', 'lightMetal']);
 
     return true;
 };
@@ -72,4 +72,10 @@ MyInterface.prototype.processKeyboard = function(event) {
     // for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
 
     this.scene.move(event.keyCode);
+
+    var self = this;
+
+    window.onkeyup = function(e) {
+        self.scene.submarine.activateResetPosition();
+    }
 };
