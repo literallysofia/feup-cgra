@@ -141,6 +141,7 @@ LightingScene.prototype.init = function(application) {
     //submarine data
     this.subAngle = 180 * degToRad;
     this.subX = 8;
+    this.subY = 1.1;
     this.subZ = 8;
     this.subVelocity = 0;
 };
@@ -295,13 +296,12 @@ LightingScene.prototype.display = function() {
     this.updateSubmarine();
 
     this.pushMatrix();
-    this.translate(this.subX, 1.1, this.subZ);
+    this.translate(this.subX, this.subY, this.subZ);
     this.rotate(this.subAngle, 0, 1, 0);
     //this.materialSubDefault.apply();
     this.submarineAppearances[this.currSubmarineAppearance].apply();
     this.submarine.display();
     this.popMatrix();
-
 
 };
 
@@ -331,6 +331,14 @@ LightingScene.prototype.move = function(keycode) {
             break;
         case (108): //l
             this.submarine.updatePeriscopeMove(keycode);
+            break;
+        case (113): //q
+            this.subY += 0.1;
+            this.submarine.activateHorizontalTrapezes(1);
+            break;
+        case (101): //e
+            this.subY -= 0.1;
+            this.submarine.activateHorizontalTrapezes(2);
             break;
     };
 
