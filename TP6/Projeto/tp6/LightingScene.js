@@ -113,13 +113,22 @@ LightingScene.prototype.init = function(application) {
     this.lightMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.lightMetal.setSpecular(1, 1, 1, 1);
 
+    this.friends = new CGFappearance(this);
+    this.friends.loadTexture("../resources/images/joey-chandler.jpg");
+    this.friends.setTextureWrap("REPEAT", "REPEAT");
+    this.friends.setAmbient(0.5, 0.5, 0.5, 1);
+    this.friends.setDiffuse(0.5, 0.5, 0.5, 1);
+    this.friends.setSpecular(1, 1, 1, 1);
 
-    this.submarineAppearances = [this.blueMetal, this.darkMetal, this.greyMetal, this.lightMetal];
+
+
+    this.submarineAppearances = [this.blueMetal, this.darkMetal, this.greyMetal, this.lightMetal, this.friends];
     this.submarineAppearancesList = {
         'blueMetal': 0,
         'darkMetal': 1,
         'greyMetal': 2,
-        'lightMetal': 3
+        'lightMetal': 3,
+        'friends': 4
     }
     this.submarineTexture = 'darkMetal';
     this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
@@ -144,6 +153,10 @@ LightingScene.prototype.init = function(application) {
     this.subY = 1.1;
     this.subZ = 8;
     this.subVelocity = 0;
+    this.subSlope = 0;
+    this.resetSlope = false;
+    this.subVerticalDirection = 0;
+    this.subSlopeMove = false;
 };
 
 LightingScene.prototype.animacaoRelogio = function() {
@@ -293,12 +306,17 @@ LightingScene.prototype.display = function() {
     this.popMatrix();
 
     //Submarine
+    if (this.subSlopeMove)
+        this.updateSubmarineSlope();
+
     this.updateSubmarine();
 
     this.pushMatrix();
     this.translate(this.subX, this.subY, this.subZ);
+    this.rotate(this.subSlope, 1, 0, 0);
     this.rotate(this.subAngle, 0, 1, 0);
-    //this.materialSubDefault.apply();
+    this.materialSubDefault.apply();
+    this.translate(0,0,-2);
     this.submarineAppearances[this.currSubmarineAppearance].apply();
     this.submarine.display();
     this.popMatrix();
@@ -334,10 +352,12 @@ LightingScene.prototype.move = function(keycode) {
             break;
         case (113): //q
             this.subY += 0.1;
+            this.startSlope(1);
             this.submarine.activateHorizontalTrapezes(1);
             break;
         case (101): //e
             this.subY -= 0.1;
+            this.startSlope(-1);
             this.submarine.activateHorizontalTrapezes(2);
             break;
     };
@@ -348,5 +368,70 @@ LightingScene.prototype.updateSubmarine = function() {
 
     this.subX += this.subVelocity * Math.sin(this.subAngle);
     this.subZ += this.subVelocity * Math.cos(this.subAngle);
+
+};
+
+LightingScene.prototype.startSlope = function(direction) {
+
+    this.resetSlope = false;
+    this.subVerticalDirection = direction;
+    this.subSlopeMove = true;
+
+};
+
+LightingScene.prototype.activateResetSlope = function() {
+
+    this.resetSlope = true;
+    this.subSlopeMove = true;
+
+};
+
+LightingScene.prototype.updateSubmarineSlope = function() {
+
+    if (this.resetSlope) {
+
+        switch (this.subVerticalDirection) {
+            case (1): //sobe
+
+                if (this.subSlope < 0) {
+                    this.subSlopeMove = false;
+                    this.subSlope = 0;
+                } else
+                    this.subSlope -= (2 * Math.PI) / 100;
+
+                break;
+            case (-1): //desce
+
+                if (this.subSlope > 0) {
+                    this.subSlopeMove = false;
+                    this.subSlope = 0;
+                } else
+                    this.subSlope += (2 * Math.PI) / 100;
+
+                break;
+        };
+
+    } else {
+
+        switch (this.subVerticalDirection) {
+            case (1): //sobe
+
+                if (this.subSlope > (Math.PI / 10))
+                    this.subSlopeMove = false;
+                else
+                    this.subSlope += (2 * Math.PI) / 100;
+
+                break;
+            case (-1): //desce
+
+                if (this.subSlope < -(Math.PI / 10))
+                    this.subSlopeMove = false;
+                else
+                    this.subSlope -= (2 * Math.PI) / 100;
+
+                break;
+        };
+
+    }
 
 };

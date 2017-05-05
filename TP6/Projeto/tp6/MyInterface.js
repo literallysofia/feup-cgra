@@ -53,7 +53,7 @@ MyInterface.prototype.init = function(application) {
     group.add(this.scene, 'luz3');
 
     //this.gui.add(this.scene, 'submarineTexture');
-    this.gui.add(this.scene, 'submarineTexture', ['blueMetal', 'darkMetal', 'greyMetal', 'lightMetal']);
+    this.gui.add(this.scene, 'submarineTexture', ['blueMetal', 'darkMetal', 'greyMetal', 'lightMetal', 'friends']);
 
     return true;
 };
@@ -77,5 +77,6 @@ MyInterface.prototype.processKeyboard = function(event) {
 
     window.onkeyup = function(e) {
         self.scene.submarine.activateResetPosition();
+        self.scene.activateResetSlope();
     }
 };
