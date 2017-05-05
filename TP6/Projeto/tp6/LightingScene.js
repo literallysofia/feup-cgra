@@ -126,7 +126,7 @@ LightingScene.prototype.init = function(application) {
 
     //time
     this.firstTime = 1;
-    this.setUpdatePeriod(10);
+    this.setUpdatePeriod(20);
 
     //gui
     this.luz0 = true;

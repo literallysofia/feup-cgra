@@ -111,7 +111,7 @@ MySubmarine.prototype.display = function() {
         this.updateVerticalTrapezes();
 
     this.scene.pushMatrix();
-    this.scene.rotate(this.verticalTrapezeAngle, 0, 1, 0);
+    this.scene.rotate(-this.verticalTrapezeAngle, 0, 1, 0);
     this.scene.translate(0, 1, -0.5);
     this.scene.scale(0.1, 0.6, 0.4);
     this.scene.rotate(Math.PI / 2, 0, 1, 0);
@@ -126,7 +126,9 @@ MySubmarine.prototype.display = function() {
     this.scene.pushMatrix();
 
     this.scene.translate(0, 1, -0.5);
-    this.scene.rotate(-this.horizontalTrapezeAngle, 1, 0, 0);
+    this.scene.translate(0,0,0.4);
+    this.scene.rotate(this.horizontalTrapezeAngle, 1, 0, 0);
+    this.scene.translate(0,0,-0.4);
     this.scene.scale(0.6, 0.1, 0.4);
     this.scene.rotate(-Math.PI / 2, 1, 0, 0);
     this.scene.rotate(Math.PI, 0, 0, 1);
@@ -137,7 +139,7 @@ MySubmarine.prototype.display = function() {
     this.scene.pushMatrix();
 
     this.scene.translate(0, 2, 3);
-    this.scene.rotate(-this.horizontalTrapezeAngle, 1, 0, 0);
+    this.scene.rotate(this.horizontalTrapezeAngle, 1, 0, 0);
     this.scene.scale(0.4, 0.05, 0.4);
     this.scene.rotate(Math.PI / 2, 1, 0, 0);
     this.scene.rotate(Math.PI, 0, 0, 1);
