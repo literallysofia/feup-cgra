@@ -196,10 +196,10 @@ MySubmarine.prototype.updatePeriscope = function() {
     };
 };
 
-MySubmarine.prototype.updatePropeller = function(deltaTime, velocity) {
+MySubmarine.prototype.updatePropeller = function(deltaTime, velocity, speed) {
 
     let time = deltaTime / 1000;
-    var ang = time * 360 * velocity / 0.05;
+    var ang = time * 360 * velocity / (0.01 * speed);
     this.rightPropeller.updateRotation(ang);
     this.leftPropeller.updateRotation(-ang);
 

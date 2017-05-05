@@ -88,35 +88,35 @@ LightingScene.prototype.init = function(application) {
     this.blueMetal = new CGFappearance(this);
     this.blueMetal.loadTexture("../resources/images/sub1.jpg");
     this.blueMetal.setTextureWrap("REPEAT", "REPEAT");
-    this.blueMetal.setAmbient(0.5, 0.5, 0.5, 1);
+    this.blueMetal.setAmbient(0.8, 0.8, 0.8, 1);
     this.blueMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.blueMetal.setSpecular(1, 1, 1, 1);
 
     this.darkMetal = new CGFappearance(this);
     this.darkMetal.loadTexture("../resources/images/sub2.jpg");
     this.darkMetal.setTextureWrap("REPEAT", "REPEAT");
-    this.darkMetal.setAmbient(0.5, 0.5, 0.5, 1);
+    this.darkMetal.setAmbient(0.8, 0.8, 0.8, 1);
     this.darkMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.darkMetal.setSpecular(1, 1, 1, 1);
 
     this.greyMetal = new CGFappearance(this);
     this.greyMetal.loadTexture("../resources/images/sub3.jpg");
     this.greyMetal.setTextureWrap("REPEAT", "REPEAT");
-    this.greyMetal.setAmbient(0.5, 0.5, 0.5, 1);
+    this.greyMetal.setAmbient(0.8, 0.8, 0.8, 1);
     this.greyMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.greyMetal.setSpecular(1, 1, 1, 1);
 
     this.lightMetal = new CGFappearance(this);
     this.lightMetal.loadTexture("../resources/images/sub4.jpg");
     this.lightMetal.setTextureWrap("REPEAT", "REPEAT");
-    this.lightMetal.setAmbient(0.5, 0.5, 0.5, 1);
+    this.lightMetal.setAmbient(0.8, 0.8, 0.8, 1);
     this.lightMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.lightMetal.setSpecular(1, 1, 1, 1);
 
     this.friends = new CGFappearance(this);
     this.friends.loadTexture("../resources/images/joey-chandler.jpg");
     this.friends.setTextureWrap("REPEAT", "REPEAT");
-    this.friends.setAmbient(0.5, 0.5, 0.5, 1);
+    this.friends.setAmbient(0.8, 0.8, 0.8, 1);
     this.friends.setDiffuse(0.5, 0.5, 0.5, 1);
     this.friends.setSpecular(1, 1, 1, 1);
 
@@ -142,7 +142,7 @@ LightingScene.prototype.init = function(application) {
     this.luz1 = true;
     this.luz2 = true;
     this.luz3 = true;
-    this.speed = 3;
+    this.speed = 2;
     CLOCKPAUSE = false;
 
 
@@ -243,7 +243,7 @@ LightingScene.prototype.update = function(currTime) {
 
     this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
 
-    this.submarine.updatePropeller(this.deltaTime, this.subVelocity);
+    this.submarine.updatePropeller(this.deltaTime, this.subVelocity, this.speed);
 
 }
 
@@ -331,7 +331,7 @@ LightingScene.prototype.move = function(keycode) {
             this.submarine.activateVerticalTrapezes(1);
             break;
         case (115): //s
-            this.subVelocity -= 0.05;
+            this.subVelocity -= 0.01 * this.speed;
             //this.subX = this.subX - 0.1 * Math.sin(this.subAngle);
             //this.subZ = this.subZ - 0.1 * Math.cos(this.subAngle);
             break;
@@ -340,7 +340,7 @@ LightingScene.prototype.move = function(keycode) {
             this.submarine.activateVerticalTrapezes(2);
             break;
         case (119): //w
-            this.subVelocity += 0.05;
+            this.subVelocity += 0.01 * this.speed;
             //this.subX = this.subX + 0.1 * Math.sin(this.subAngle);
             //this.subZ = this.subZ + 0.1 * Math.cos(this.subAngle);
             break;

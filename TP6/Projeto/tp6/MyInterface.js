@@ -37,7 +37,7 @@ MyInterface.prototype.init = function(application) {
     // this.speed=3;
     // min and max values can be specified as parameters
 
-    this.gui.add(this.scene, 'speed', -5, 5);
+    this.gui.add(this.scene, 'speed', 0, 5);
 
     // add a group of controls (and open/expand by defult)
 
