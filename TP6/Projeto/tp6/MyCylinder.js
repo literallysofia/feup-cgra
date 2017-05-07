@@ -47,14 +47,14 @@
  var ang=2*Math.PI/this.slices;
 
   for(let j =0; j <= this.stacks; j++){
-    for(let i=0; i < this.slices; i++){
+    for(let i=0; i <= this.slices; i++){
          this.vertices.push(Math.cos(ang *i),Math.sin(ang*i),j*1/this.stacks);
          this.normals.push(Math.cos(i*ang),Math.sin(i*ang),0);
          this.texCoords.push(i*1/this.slices,j*1/this.stacks);
        }
    }
 
- var numPontos=this.stacks*this.slices;
+ var numPontos=this.stacks*this.slices+this.stacks;
 
  for (let i =0; i < numPontos; i++ ){
     if((i+1)%this.slices==0){

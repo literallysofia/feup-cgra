@@ -35,6 +35,7 @@ LightingScene.prototype.init = function(application) {
     this.stake = new MyCylinder(this, 8, 20);
     this.clock = new MyClock(this);
     this.submarine = new MySubmarine(this);
+    this.cylinder = new MyCylinder(this, 20,8);
 
     // Materials
     this.materialDefault = new CGFappearance(this);
@@ -319,6 +320,11 @@ LightingScene.prototype.display = function() {
     this.translate(0,0,-2);
     this.submarineAppearances[this.currSubmarineAppearance].apply();
     this.submarine.display();
+    this.popMatrix();
+
+    this.pushMatrix();
+    this.translate(0.5,1,0.5);
+    this.cylinder.display();
     this.popMatrix();
 
 };
