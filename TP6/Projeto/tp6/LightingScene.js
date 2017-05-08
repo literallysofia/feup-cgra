@@ -31,10 +31,17 @@ LightingScene.prototype.init = function(application) {
     this.axis = new CGFaxis(this);
 
     // Scene elements
-    this.ocean = new Plane(this, 100, 0, 4, 0, 4);
+    this.ocean = new Plane(this, 100, 0, 6, 0, 6);
     this.stake = new MyCylinder(this, 8, 20);
     this.clock = new MyClock(this);
     this.submarine = new MySubmarine(this);
+
+
+    this.target1 = new MyTarget(this,0,8);
+    this.target2 = new MyTarget(this,8,-5);
+    this.target3 = new MyTarget(this,-10,-10);
+    this.targets = [this.target1, this.target2, this.target3];
+    this.targetIndex=0;
 
     // Materials
     this.materialDefault = new CGFappearance(this);
@@ -53,26 +60,6 @@ LightingScene.prototype.init = function(application) {
     this.floorAppearance.setTextureWrap("REPEAT", "REPEAT");
     this.floorAppearance.setAmbient(0.5, 0.5, 0.5, 1);
 
-    this.windowAppearance = new CGFappearance(this);
-    this.windowAppearance.loadTexture("../resources/images/window.png");
-    this.windowAppearance.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
-    this.windowAppearance.setAmbient(0.5, 0.5, 0.5, 1);
-
-    this.slidesAppearance = new CGFappearance(this);
-    this.slidesAppearance.loadTexture("../resources/images/slides.png");
-    this.slidesAppearance.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
-    this.slidesAppearance.setDiffuse(0.8, 0.8, 0.8, 1);
-    this.slidesAppearance.setSpecular(0.2, 0.2, 0.2, 1);
-    this.slidesAppearance.setShininess(10);
-    this.slidesAppearance.setAmbient(0.5, 0.5, 0.5, 1);
-
-    this.boardAppearance = new CGFappearance(this);
-    this.boardAppearance.loadTexture("../resources/images/board.png");
-    this.boardAppearance.setDiffuse(0.2, 0.2, 0.2, 1);
-    this.boardAppearance.setSpecular(0.6, 0.6, 0.6, 1);
-    this.boardAppearance.setShininess(120);
-    this.boardAppearance.setAmbient(0.5, 0.5, 0.5, 1);
-
     this.cylinderAppearance = new CGFappearance(this);
     this.cylinderAppearance.loadTexture("../resources/images/cylinderTexture.jpg");
     this.cylinderAppearance.setAmbient(0.5, 0.5, 0.5, 1);
@@ -84,6 +71,20 @@ LightingScene.prototype.init = function(application) {
     this.oceanAppearance.setSpecular(0.4, 0.4, 0.4, 1);
     this.oceanAppearance.setAmbient(0.5, 0.5, 0.5, 1);
     this.oceanAppearance.setShininess(10);
+
+    this.woodAppearance = new CGFappearance(this);
+    this.woodAppearance.loadTexture("../resources/images/wood.jpg");
+    this.woodAppearance.setTextureWrap("REPEAT", "REPEAT");
+    this.woodAppearance.setDiffuse(0.3, 0.3, 0.3, 1);
+    this.woodAppearance.setSpecular(0.4, 0.4, 0.4, 1);
+    this.woodAppearance.setAmbient(0.5, 0.5, 0.5, 1);
+    this.woodAppearance.setShininess(10);
+
+    this.targetAppearance = new CGFappearance(this);
+    this.targetAppearance.setAmbient(0, 0, 0, 1);
+    this.targetAppearance.setDiffuse(0.1, 0.1, 0.1, 1);
+    this.targetAppearance.setSpecular(1, 1, 1, 1);
+    this.targetAppearance.setShininess(100);
 
     this.blueMetal = new CGFappearance(this);
     this.blueMetal.loadTexture("../resources/images/sub1.jpg");
@@ -150,13 +151,16 @@ LightingScene.prototype.init = function(application) {
     //submarine data
     this.subAngle = 180 * degToRad;
     this.subX = 8;
-    this.subY = 1.1;
+    this.subY = 1.6;
     this.subZ = 8;
     this.subVelocity = 0;
     this.subSlope = 0;
     this.resetSlope = false;
     this.subVerticalDirection = 0;
     this.subSlopeMove = false;
+
+    //this.torpedo;
+
 };
 
 LightingScene.prototype.animacaoRelogio = function() {
@@ -176,7 +180,7 @@ LightingScene.prototype.initLights = function() {
 
     // Positions for four lights
 
-    this.lights[0].setPosition(0, 0.3, 0, 1.0);
+    this.lights[0].setPosition(-16, 6, -16, 1.0);
     this.lights[0].setVisible(true); // show marker on light position (different from enabled)
 
     this.lights[1].setPosition(0, 6, 0, 1);
@@ -185,7 +189,7 @@ LightingScene.prototype.initLights = function() {
     this.lights[2].setPosition(16, 6, 0, 1.0);
     this.lights[2].setVisible(true); // show marker on light position (different from enabled)
 
-    this.lights[3].setPosition(0, 6, 15, 1.0);
+    this.lights[3].setPosition(0, 6, 16, 1.0);
     this.lights[3].setVisible(true); // show marker on light position (different from enabled)
 
     this.lights[0].setAmbient(0, 0, 0, 1);
@@ -245,6 +249,7 @@ LightingScene.prototype.update = function(currTime) {
 
     this.submarine.updatePropeller(this.deltaTime, this.subVelocity, this.speed);
 
+    if(this.torpedo!=null) this.torpedo.moveToTarget(this.deltaTime);
 }
 
 LightingScene.prototype.display = function() {
@@ -266,7 +271,7 @@ LightingScene.prototype.display = function() {
     this.updateLights();
 
     // Draw axis
-    this.axis.display();
+    //this.axis.display();
 
     this.materialDefault.apply();
 
@@ -298,9 +303,9 @@ LightingScene.prototype.display = function() {
 
     //Ocean
     this.pushMatrix();
-    this.translate(8, 0, 8);
+    //this.translate(16, 0, 16);
     this.rotate(-90 * degToRad, 1, 0, 0);
-    this.scale(16, 16, 0.2);
+    this.scale(32, 32, 0.2);
     this.oceanAppearance.apply();
     this.ocean.display();
     this.popMatrix();
@@ -320,6 +325,26 @@ LightingScene.prototype.display = function() {
     this.submarineAppearances[this.currSubmarineAppearance].apply();
     this.submarine.display();
     this.popMatrix();
+
+    //Targets
+    this.pushMatrix();
+    this.woodAppearance.apply();
+    if(this.target1!=null ) this.target1.display();
+    if(this.target2!=null ) this.target2.display();
+    if(this.target3!=null ) this.target3.display();
+    this.popMatrix();
+
+    //Torpedo
+    if(this.torpedo!=null) {
+    this.pushMatrix();
+    //this.rotate(this.torpedo.t, 1,1,0);
+    //this.rotate(this.torpedo.p, 0,0,1);
+    this.translate(this.torpedo.x,this.torpedo.y,this.torpedo.z);
+    this.rotate(Math.PI,0,1,0);
+    this.submarineAppearances[this.currSubmarineAppearance].apply();
+    this.torpedo.display();
+    this.popMatrix();
+  }
 };
 
 LightingScene.prototype.move = function(keycode) {
@@ -359,8 +384,14 @@ LightingScene.prototype.move = function(keycode) {
             this.startSlope(-1);
             this.submarine.activateHorizontalTrapezes(2);
             break;
-    };
 
+        case(102): //f
+            this.torpedo = new MyTorpedo(this, this.subX, this.subY, this.subZ);
+            this.torpedo.target=this.targets[this.targetIndex];
+            this.targetIndex=this.targetIndex+1;
+            this.torpedo.setPoints();
+            break;
+    };
 };
 
 LightingScene.prototype.updateSubmarine = function() {

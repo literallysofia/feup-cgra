@@ -53,6 +53,8 @@ serialInclude([
     'MyTrapeze.js',
     'MyPropeller.js',
     'MyPeriscope.js',
+    'MyTarget.js',
+    'MyTorpedo.js' ,
 
     main = function() {
         var app = new CGFapplication(document.body);
