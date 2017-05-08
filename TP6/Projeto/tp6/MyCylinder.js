@@ -54,31 +54,25 @@
        }
    }
 
- var numPontos=this.stacks*this.slices+this.stacks;
 
- for (let i =0; i < numPontos; i++ ){
-    if((i+1)%this.slices==0){
-     this.indices.push(i,i+1-this.slices, i+1);
-     this.indices.push(i,i+1, i+this.slices);
-   }
-   else {
-     this.indices.push(i, i+1, i+1+this.slices);
-     this.indices.push(i, i+1+this.slices, i+this.slices);
-   }
- }
+for(let i=0; i < this.stacks; i++){
+  for(let j=0; j < this.slices; j++){
+
+    this.indices.push(i*(this.slices+1)+j,i*(this.slices+1)+1+j, (i+1)*(this.slices+1)+j);
+    this.indices.push(i*(this.slices+1)+1+j, (i+1)*(this.slices+1)+1+j, (i+1)*(this.slices+1)+j);
+  }
+}
 
  if(this.twoSides == true){
 
-   for (let i =0; i < numPontos; i++ ){
-      if((i+1)%this.slices==0){
-       this.indices.push(i+1,i+1-this.slices, i);
-       this.indices.push(i+this.slices, i+1,i);
-     }
-     else {
-       this.indices.push(i+1+this.slices,i+1, i);
-       this.indices.push(i+this.slices, i+1+this.slices, i);
+   for(let i=0; i < this.stacks; i++){
+     for(let j=0; j < this.slices; j++){
+       this.indices.push((i+1)*(this.slices+1)+j,i*(this.slices+1)+1+j,i*(this.slices+1)+j);
+       this.indices.push( (i+1)*(this.slices+1)+j, (i+1)*(this.slices+1)+1+j, i*(this.slices+1)+1+j);
      }
    }
+
+
  }
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
