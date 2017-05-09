@@ -3,11 +3,11 @@
  * @constructor
  */
 
-function MyTarget(scene, x, z) {
+function MyTarget(scene, x, y, z) {
     CGFobject.call(this, scene);
 
     this.x=x;
-    this.y=0;
+    this.y=y;
     this.z=z;
 
     this.cube = new MyUnitCubeQuad(this.scene);
@@ -19,7 +19,7 @@ MyTarget.prototype.constructor = MyTarget;
 MyTarget.prototype.display = function() {
 
     this.scene.pushMatrix();
-    this.scene.translate(this.x+0.5,0.5,this.z+0.5);
+    this.scene.translate(this.x,this.y,this.z);
     this.cube.display();
     this.scene.popMatrix();
 

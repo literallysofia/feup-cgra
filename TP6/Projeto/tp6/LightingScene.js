@@ -35,11 +35,12 @@ LightingScene.prototype.init = function(application) {
     this.stake = new MyCylinder(this, 8, 20);
     this.clock = new MyClock(this);
     this.submarine = new MySubmarine(this);
+    //this.torpedo = new MyTorpedo(this,0,0,0);
 
 
-    this.target1 = new MyTarget(this,0,8);
-    this.target2 = new MyTarget(this,8,-5);
-    this.target3 = new MyTarget(this,-10,-10);
+    this.target1 = new MyTarget(this,0,0.5,8);
+    this.target2 = new MyTarget(this,10,0.5,-5);
+    this.target3 = new MyTarget(this,-10,0.5,-10);
     this.targets = [this.target1, this.target2, this.target3];
     this.targetIndex=0;
 
@@ -271,7 +272,7 @@ LightingScene.prototype.display = function() {
     this.updateLights();
 
     // Draw axis
-    //this.axis.display();
+    this.axis.display();
 
     this.materialDefault.apply();
 
@@ -337,10 +338,9 @@ LightingScene.prototype.display = function() {
     //Torpedo
     if(this.torpedo!=null) {
     this.pushMatrix();
-    //this.rotate(this.torpedo.t, 1,1,0);
-    //this.rotate(this.torpedo.p, 0,0,1);
     this.translate(this.torpedo.x,this.torpedo.y,this.torpedo.z);
-    this.rotate(Math.PI,0,1,0);
+    this.rotate(this.torpedo.p, 0,1,0);
+    this.rotate(-this.torpedo.k, 1,0,0);
     this.submarineAppearances[this.currSubmarineAppearance].apply();
     this.torpedo.display();
     this.popMatrix();
@@ -386,10 +386,12 @@ LightingScene.prototype.move = function(keycode) {
             break;
 
         case(102): //f
+          if(this.targetIndex<3){
             this.torpedo = new MyTorpedo(this, this.subX, this.subY, this.subZ);
             this.torpedo.target=this.targets[this.targetIndex];
-            this.targetIndex=this.targetIndex+1;
             this.torpedo.setPoints();
+            this.targetIndex=this.targetIndex+1;
+          }
             break;
     };
 };

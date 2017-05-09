@@ -13,7 +13,8 @@ function MyTorpedo(scene,x,y,z) {
     this.t=0;
 
     this.p=0;
-    this.t=0;
+    this.k=0;
+    this.r=0;
 
     this.cylinder = new MyCylinder(this.scene,20,20);
     this.frontSemiSphere = new MySemiSphere(this.scene,20,20);
@@ -30,19 +31,21 @@ MyTorpedo.prototype.constructor = MyTorpedo;
 MyTorpedo.prototype.display = function() {
 
     this.scene.pushMatrix();
-
+    this.scene.rotate(Math.PI,1,0,0);
     this.scene.translate(0,0,-1);
     this.scene.scale(0.4,0.4,2);
     this.cylinder.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+    this.scene.rotate(Math.PI,1,0,0);
     this.scene.translate(0,0,1);
     this.scene.scale(0.4,0.4,0.4);
     this.frontSemiSphere.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+    this.scene.rotate(Math.PI,1,0,0);
     this.scene.translate(0,0,-1);
     this.scene.rotate(Math.PI, 1,0,0);
     this.scene.scale(0.4,0.4,0.4);
@@ -50,6 +53,7 @@ MyTorpedo.prototype.display = function() {
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+    this.scene.rotate(Math.PI,1,0,0);
     this.scene.translate(0,0,-1);
     this.scene.scale(0.3,0.05,0.3);
     this.scene.rotate(Math.PI/2, 1,0,0);
@@ -57,17 +61,13 @@ MyTorpedo.prototype.display = function() {
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+    this.scene.rotate(Math.PI,1,0,0);
     this.scene.translate(0,0,-1);
     this.scene.scale(0.05,0.3,0.3);
     this.scene.rotate(Math.PI/2,0,0,1);
     this.scene.rotate(Math.PI/2, 1,0,0);
     this.horizontalTrapeze.display();
     this.scene.popMatrix();
-
-}
-
-MyTorpedo.prototype.setAngles =function(newX,newY,newZ){
-
 
 }
 
@@ -99,19 +99,25 @@ MyTorpedo.prototype.moveToTarget = function(delta) {
 
   var inc = time/distance;
 
-  if(this.t<1){
+  if(this.t<=1){
+    var newX,newY,newZ;
+    newX=Math.pow(1-this.t,3)*this.p1x+3*this.t*Math.pow(1-this.t,2)*this.p2x+3*Math.pow(this.t,2)*(1-this.t)*this.p3x+Math.pow(this.t,3)*this.p4x;
+    newY=Math.pow(1-this.t,3)*this.p1y+3*this.t*Math.pow(1-this.t,2)*this.p2y+3*Math.pow(this.t,2)*(1-this.t)*this.p3y+Math.pow(this.t,3)*this.p4y;
+    newZ=Math.pow(1-this.t,3)*this.p1z+3*this.t*Math.pow(1-this.t,2)*this.p2z+3*Math.pow(this.t,2)*(1-this.t)*this.p3z+Math.pow(this.t,3)*this.p4z;
 
-    var newX=Math.pow(1-this.t,3)*this.p1x+3*this.t*Math.pow(1-this.t,2)*this.p2x+3*Math.pow(this.t,2)*(1-this.t)*this.p3x+Math.pow(this.t,3)*this.p4x;
-    var newY=Math.pow(1-this.t,3)*this.p1y+3*this.t*Math.pow(1-this.t,2)*this.p2y+3*Math.pow(this.t,2)*(1-this.t)*this.p3y+Math.pow(this.t,3)*this.p4y;
-    var newZ=Math.pow(1-this.t,3)*this.p1z+3*this.t*Math.pow(1-this.t,2)*this.p2z+3*Math.pow(this.t,2)*(1-this.t)*this.p3z+Math.pow(this.t,3)*this.p4z;
+    console.log("NEW:" + newX+ " " + newY + " "+ newZ);
+    console.log("THIS:" + this.x+ " " + this.y + " "+ this.z);
 
-  /*  var x=newX-this.x;
-    var y=newY-this.y;
-    var z=newZ-this.z;
+    var a,b,c;
+    a=this.x-newX;
+    b=this.y-newY;
+    c=this.z-newZ;
 
-    this.t=Math.atan(y/x);
-    this.p=Math.acos(z/(Math.sqrt(Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2))));
-    console.log("ashg<hdjhkj");*/
+    console.log("DELTA:" + a+ " " + b + " "+ c);
+
+    this.r=Math.sqrt(a*a+b*b+c*c);
+    this.k=Math.atan(b/a);
+    this.p=Math.acos(c/this.r);
 
     this.x=newX;
     this.y=newY;
