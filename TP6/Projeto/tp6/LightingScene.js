@@ -38,9 +38,10 @@ LightingScene.prototype.init = function(application) {
     //this.torpedo = new MyTorpedo(this,0,0,0);
 
 
-    this.target1 = new MyTarget(this,0,0.5,8);
-    this.target2 = new MyTarget(this,10,0.5,-5);
-    this.target3 = new MyTarget(this,-10,0.5,-10);
+    this.target1 = new MyTarget(this,-10,0.5,8);
+    this.target2 = new MyTarget(this,5,0.5,14);
+  //  this.target2 = new MyTarget(this,8,0.5,-6);
+    this.target3 = new MyTarget(this,-6,0.5,-6);
     this.targets = [this.target1, this.target2, this.target3];
     this.targetIndex=0;
 
@@ -319,8 +320,8 @@ LightingScene.prototype.display = function() {
 
     this.pushMatrix();
     this.translate(this.subX, this.subY, this.subZ);
-    this.rotate(this.subSlope, 1, 0, 0);
     this.rotate(this.subAngle, 0, 1, 0);
+    this.rotate(-this.subSlope, 1, 0, 0);
     this.materialSubDefault.apply();
     this.translate(0,0,-2);
     this.submarineAppearances[this.currSubmarineAppearance].apply();
@@ -330,17 +331,18 @@ LightingScene.prototype.display = function() {
     //Targets
     this.pushMatrix();
     this.woodAppearance.apply();
-    if(this.target1!=null ) this.target1.display();
-    if(this.target2!=null ) this.target2.display();
-    if(this.target3!=null ) this.target3.display();
+    if(this.target1!=null && !this.target1.destroyed) this.target1.display();
+    if(this.target2!=null && !this.target2.destroyed ) this.target2.display();
+    if(this.target3!=null && !this.target3.destroyed) this.target3.display();
     this.popMatrix();
 
     //Torpedo
-    if(this.torpedo!=null) {
+    if(this.torpedo!=null && !this.torpedo.destroyed) {
     this.pushMatrix();
     this.translate(this.torpedo.x,this.torpedo.y,this.torpedo.z);
-    this.rotate(this.torpedo.p, 0,1,0);
-    this.rotate(-this.torpedo.k, 1,0,0);
+    this.rotate(this.torpedo.angxy,0,1,0);
+    this.rotate(-this.torpedo.angz,1,0,0);
+    this.rotate(Math.PI,1,0,0);
     this.submarineAppearances[this.currSubmarineAppearance].apply();
     this.torpedo.display();
     this.popMatrix();
@@ -349,51 +351,56 @@ LightingScene.prototype.display = function() {
 
 LightingScene.prototype.move = function(keycode) {
 
-    switch (keycode) {
-        case (97): //a
-            this.subAngle += (2 * Math.PI) / 100;
-            this.submarine.activateVerticalTrapezes(1);
-            break;
-        case (115): //s
-            this.subVelocity -= 0.01 * this.speed;
-            //this.subX = this.subX - 0.1 * Math.sin(this.subAngle);
-            //this.subZ = this.subZ - 0.1 * Math.cos(this.subAngle);
-            break;
-        case (100): //d
-            this.subAngle -= (2 * Math.PI) / 100;
-            this.submarine.activateVerticalTrapezes(2);
-            break;
-        case (119): //w
-            this.subVelocity += 0.01 * this.speed;
-            //this.subX = this.subX + 0.1 * Math.sin(this.subAngle);
-            //this.subZ = this.subZ + 0.1 * Math.cos(this.subAngle);
-            break;
-        case (112): //p
-            this.submarine.updatePeriscopeMove(keycode);
-            break;
-        case (108): //l
-            this.submarine.updatePeriscopeMove(keycode);
-            break;
-        case (113): //q
-            this.subY += 0.1;
-            this.startSlope(1);
-            this.submarine.activateHorizontalTrapezes(1);
-            break;
-        case (101): //e
-            this.subY -= 0.1;
-            this.startSlope(-1);
-            this.submarine.activateHorizontalTrapezes(2);
-            break;
+    if(keycode==97||keycode==65){ //a || A
+      this.subAngle += (2 * Math.PI) / 100;
+      this.submarine.activateVerticalTrapezes(1);
+    }
 
-        case(102): //f
-          if(this.targetIndex<3){
-            this.torpedo = new MyTorpedo(this, this.subX, this.subY, this.subZ);
-            this.torpedo.target=this.targets[this.targetIndex];
-            this.torpedo.setPoints();
-            this.targetIndex=this.targetIndex+1;
-          }
-            break;
-    };
+    if(keycode==115||keycode==83){ //s || S
+      this.subVelocity -= 0.01 * this.speed;
+      //this.subX = this.subX - 0.1 * Math.sin(this.subAngle);
+      //this.subZ = this.subZ - 0.1 * Math.cos(this.subAngle);
+    }
+
+    if(keycode==100||keycode==68){ //d || D
+      this.subAngle -= (2 * Math.PI) / 100;
+      this.submarine.activateVerticalTrapezes(2);
+    }
+
+    if(keycode==119||keycode==87){ //w || W
+      this.subVelocity += 0.01 * this.speed;
+      //this.subX = this.subX + 0.1 * Math.sin(this.subAngle);
+      //this.subZ = this.subZ + 0.1 * Math.cos(this.subAngle);
+    }
+
+    if(keycode==112||keycode==80){ //p || P
+      this.submarine.updatePeriscopeMove(keycode);
+    }
+
+    if(keycode==108||keycode==76){ //l || L
+      this.submarine.updatePeriscopeMove(keycode);
+    }
+
+    if(keycode==113||keycode==81){ //q || Q
+      this.subY += 0.1;
+      this.startSlope(1);
+      this.submarine.activateHorizontalTrapezes(1);
+    }
+
+    if(keycode==101||keycode==69){ //e || E
+      this.subY -= 0.1;
+      this.startSlope(-1);
+      this.submarine.activateHorizontalTrapezes(2);
+    }
+
+    if(keycode==102||keycode==70){ //f || F
+      if(this.targetIndex<3){
+        this.torpedo = new MyTorpedo(this, this.subX, this.subY, this.subZ);
+        this.torpedo.target=this.targets[this.targetIndex];
+        this.torpedo.setPoints();
+        this.targetIndex+=1;
+      }
+    }
 };
 
 LightingScene.prototype.updateSubmarine = function() {

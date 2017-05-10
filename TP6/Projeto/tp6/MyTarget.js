@@ -9,6 +9,7 @@ function MyTarget(scene, x, y, z) {
     this.x=x;
     this.y=y;
     this.z=z;
+    this.destroyed=false;
 
     this.cube = new MyUnitCubeQuad(this.scene);
 };
@@ -23,4 +24,4 @@ MyTarget.prototype.display = function() {
     this.cube.display();
     this.scene.popMatrix();
 
-}
+};
