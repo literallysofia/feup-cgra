@@ -35,7 +35,8 @@ LightingScene.prototype.init = function(application) {
     this.stake = new MyCylinder(this, 8, 20);
     this.clock = new MyClock(this);
     this.submarine = new MySubmarine(this);
-    //this.torpedo = new MyTorpedo(this,0,0,0);
+    this.circle=new MyCircle(this,20);
+    this.bubble= new MySphere(this,20,20);
 
 
     this.target1 = new MyTarget(this,-10,0.5,8);
@@ -123,6 +124,11 @@ LightingScene.prototype.init = function(application) {
     this.friends.setDiffuse(0.5, 0.5, 0.5, 1);
     this.friends.setSpecular(1, 1, 1, 1);
 
+    this.bubbleAppearance = new CGFappearance(this);
+    this.bubbleAppearance.setAmbient(0.3,0.3, 0.3, 1);
+    this.bubbleAppearance.setDiffuse(24/255, 50/255, 71/255, 1);
+    this.bubbleAppearance.setSpecular(1, 1, 1, 1);
+    this.bubbleAppearance.setShininess(100);
 
 
     this.submarineAppearances = [this.blueMetal, this.darkMetal, this.greyMetal, this.lightMetal, this.friends];
@@ -347,6 +353,15 @@ LightingScene.prototype.display = function() {
     this.torpedo.display();
     this.popMatrix();
   }
+
+  //semiSphere
+  this.pushMatrix();
+  this.bubbleAppearance.apply();
+  this.translate(0,3,0);
+  this.scale(0.4,0.4,0.4);
+  this.bubble.display();
+  this.popMatrix();
+
 };
 
 LightingScene.prototype.move = function(keycode) {

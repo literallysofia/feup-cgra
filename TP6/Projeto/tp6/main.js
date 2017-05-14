@@ -55,6 +55,7 @@ serialInclude([
     'MyPeriscope.js',
     'MyTarget.js',
     'MyTorpedo.js' ,
+    'MySphere.js',
 
     main = function() {
         var app = new CGFapplication(document.body);
