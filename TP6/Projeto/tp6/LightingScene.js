@@ -36,12 +36,10 @@ LightingScene.prototype.init = function(application) {
     this.clock = new MyClock(this);
     this.submarine = new MySubmarine(this);
     this.circle=new MyCircle(this,20);
-    this.bubble= new MySphere(this,20,20);
-
+    this.explosion=new MyExplosion(this);
 
     this.target1 = new MyTarget(this,-10,0.5,8);
     this.target2 = new MyTarget(this,5,0.5,14);
-  //  this.target2 = new MyTarget(this,8,0.5,-6);
     this.target3 = new MyTarget(this,-6,0.5,-6);
     this.targets = [this.target1, this.target2, this.target3];
     this.targetIndex=0;
@@ -123,13 +121,6 @@ LightingScene.prototype.init = function(application) {
     this.friends.setAmbient(0.8, 0.8, 0.8, 1);
     this.friends.setDiffuse(0.5, 0.5, 0.5, 1);
     this.friends.setSpecular(1, 1, 1, 1);
-
-    this.bubbleAppearance = new CGFappearance(this);
-    this.bubbleAppearance.setAmbient(0.3,0.3, 0.3, 1);
-    this.bubbleAppearance.setDiffuse(24/255, 50/255, 71/255, 1);
-    this.bubbleAppearance.setSpecular(1, 1, 1, 1);
-    this.bubbleAppearance.setShininess(100);
-
 
     this.submarineAppearances = [this.blueMetal, this.darkMetal, this.greyMetal, this.lightMetal, this.friends];
     this.submarineAppearancesList = {
@@ -258,6 +249,10 @@ LightingScene.prototype.update = function(currTime) {
     this.submarine.updatePropeller(this.deltaTime, this.subVelocity, this.speed);
 
     if(this.torpedo!=null) this.torpedo.moveToTarget(this.deltaTime);
+
+    if(this.target1.destroyed) this.target1.explosion.move(this.deltaTime);
+    if(this.target2.destroyed) this.target2.explosion.move(this.deltaTime);
+    if(this.target3.destroyed) this.target3.explosion.move(this.deltaTime);
 }
 
 LightingScene.prototype.display = function() {
@@ -337,9 +332,9 @@ LightingScene.prototype.display = function() {
     //Targets
     this.pushMatrix();
     this.woodAppearance.apply();
-    if(this.target1!=null && !this.target1.destroyed) this.target1.display();
-    if(this.target2!=null && !this.target2.destroyed ) this.target2.display();
-    if(this.target3!=null && !this.target3.destroyed) this.target3.display();
+    this.target1.display();
+    this.target2.display();
+    this.target3.display();
     this.popMatrix();
 
     //Torpedo
@@ -353,15 +348,6 @@ LightingScene.prototype.display = function() {
     this.torpedo.display();
     this.popMatrix();
   }
-
-  //semiSphere
-  this.pushMatrix();
-  this.bubbleAppearance.apply();
-  this.translate(0,3,0);
-  this.scale(0.4,0.4,0.4);
-  this.bubble.display();
-  this.popMatrix();
-
 };
 
 LightingScene.prototype.move = function(keycode) {

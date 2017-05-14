@@ -1,19 +1,23 @@
 /**
- * MySphere
+ * MyBubble
  * @constructor
  */
 
-function MySphere(scene) {
+function MyBubble(scene,x,y,z) {
     CGFobject.call(this, scene);
 
     this.semiSphereFront= new MySemiSphere(this.scene,20,20);
     this.semiSphereBack= new MySemiSphere(this.scene,20,20);
+
+    this.x = x;
+    this.y = y;
+    this.z = z;
 };
 
-MySphere.prototype = Object.create(CGFobject.prototype);
-MySphere.prototype.constructor = MySphere;
+MyBubble.prototype = Object.create(CGFobject.prototype);
+MyBubble.prototype.constructor = MyBubble;
 
-MySphere.prototype.display = function() {
+MyBubble.prototype.display = function() {
 
     this.scene.pushMatrix();
     this.semiSphereFront.display();
