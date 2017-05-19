@@ -118,20 +118,20 @@ LightingScene.prototype.init = function(application) {
     this.lightMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.lightMetal.setSpecular(1, 1, 1, 1);
 
-    this.usa = new CGFappearance(this);
-    this.usa.loadTexture("../resources/images/usa.jpg");
-    this.usa.setTextureWrap("REPEAT", "REPEAT");
-    this.usa.setAmbient(0.8, 0.8, 0.8, 1);
-    this.usa.setDiffuse(0.5, 0.5, 0.5, 1);
-    this.usa.setSpecular(1, 1, 1, 1);
+    this.sky = new CGFappearance(this);
+    this.sky.loadTexture("../resources/images/sky.png");
+    this.sky.setTextureWrap("REPEAT", "REPEAT");
+    this.sky.setAmbient(0.8, 0.8, 0.8, 1);
+    this.sky.setDiffuse(0.5, 0.5, 0.5, 1);
+    this.sky.setSpecular(1, 1, 1, 1);
 
-    this.submarineAppearances = [this.blueMetal, this.darkMetal, this.greyMetal, this.lightMetal, this.usa];
+    this.submarineAppearances = [this.blueMetal, this.darkMetal, this.greyMetal, this.lightMetal, this.sky];
     this.submarineAppearancesList = {
         'blueMetal': 0,
         'darkMetal': 1,
         'greyMetal': 2,
         'lightMetal': 3,
-        'usa': 4
+        'sky': 4
     }
     this.submarineTexture = 'darkMetal';
     this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];

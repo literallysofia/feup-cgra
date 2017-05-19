@@ -53,7 +53,7 @@ MyInterface.prototype.init = function(application) {
     group.add(this.scene, 'luz3');
 
     //this.gui.add(this.scene, 'submarineTexture');
-    this.gui.add(this.scene, 'submarineTexture', ['blueMetal', 'darkMetal', 'greyMetal', 'lightMetal', 'usa']);
+    this.gui.add(this.scene, 'submarineTexture', ['blueMetal', 'darkMetal', 'greyMetal', 'lightMetal', 'sky']);
 
     return true;
 };
