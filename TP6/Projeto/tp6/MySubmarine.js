@@ -35,6 +35,7 @@ function MySubmarine(scene) {
     //trapezes data
     this.resetPosition = false;
 
+
     this.verticalTrapezeMove = false;
     this.verticalTrapezeDirection = 0;
     this.verticalTrapezeAngle = 0;
@@ -343,6 +344,7 @@ MySubmarine.prototype.activateResetPosition = function() {
 MySubmarine.prototype.updateSubmarine = function() {
     this.subX += this.subVelocity * Math.sin(this.subAngle);
     this.subZ += this.subVelocity * Math.cos(this.subAngle);
+    this.subY += this.subVelocity * Math.sin(this.subSlope);
 };
 
 MySubmarine.prototype.applySlope = function(direction) {

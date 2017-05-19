@@ -45,6 +45,6 @@ MyPropeller.prototype.display = function() {
 
 MyPropeller.prototype.updateRotation = function(ang) {
 
-  this.quadRotation = (this.quadRotation + ang) % 360;
+    this.quadRotation = (this.quadRotation + ang) % 360;
 
 };

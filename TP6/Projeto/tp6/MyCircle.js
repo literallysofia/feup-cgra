@@ -14,7 +14,7 @@ MyCircle.prototype = Object.create(CGFobject.prototype);
 MyCircle.prototype.constructor = MyCircle;
 
 MyCircle.prototype.initBuffers = function() {
-  
+
     this.vertices = [];
     this.normals = [];
     this.indices = [];

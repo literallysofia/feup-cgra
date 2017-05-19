@@ -43,7 +43,7 @@ serialInclude([
     'Plane.js',
     'MyCylinder.js',
     'MyClock.js',
-	  'MyCircle.js',
+    'MyCircle.js',
     'MyClockHand.js',
     'MyInterface.js',
     'MySubmarine.js',
@@ -54,7 +54,7 @@ serialInclude([
     'MyPropeller.js',
     'MyPeriscope.js',
     'MyTarget.js',
-    'MyTorpedo.js' ,
+    'MyTorpedo.js',
     'MyBubble.js',
     'MyExplosion.js',
 

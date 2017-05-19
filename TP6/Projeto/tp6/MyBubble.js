@@ -3,11 +3,11 @@
  * @constructor
  */
 
-function MyBubble(scene,x,y,z) {
+function MyBubble(scene, x, y, z) {
     CGFobject.call(this, scene);
 
-    this.semiSphereFront= new MySemiSphere(this.scene,20,20);
-    this.semiSphereBack= new MySemiSphere(this.scene,20,20);
+    this.semiSphereFront = new MySemiSphere(this.scene, 20, 20);
+    this.semiSphereBack = new MySemiSphere(this.scene, 20, 20);
 
     this.x = x;
     this.y = y;
@@ -24,7 +24,7 @@ MyBubble.prototype.display = function() {
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
-    this.scene.rotate(Math.PI,1,0,0);
+    this.scene.rotate(Math.PI, 1, 0, 0);
     this.semiSphereBack.display();
     this.scene.popMatrix();
 

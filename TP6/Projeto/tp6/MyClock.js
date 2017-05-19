@@ -6,7 +6,7 @@
 function MyClock(scene) {
     CGFobject.call(this, scene);
 
-    this.time=0;
+    this.time = 0;
 
     this.cilinder = new MyCylinder(this.scene, 12, 1);
     this.cilinder.initBuffers();
@@ -23,9 +23,9 @@ function MyClock(scene) {
     this.backCircle = new MyCircle(this.scene, 12);
     this.backCircle.initBuffers();
 
-    this.secPointer = new MyClockHand(this.scene, 0.015,0.8);
-    this.minPointer = new MyClockHand(this.scene, 0.03,0.8);
-    this.hourPointer = new MyClockHand(this.scene, 0.035,0.5);
+    this.secPointer = new MyClockHand(this.scene, 0.015, 0.8);
+    this.minPointer = new MyClockHand(this.scene, 0.03, 0.8);
+    this.hourPointer = new MyClockHand(this.scene, 0.035, 0.5);
 
 
     this.secPointer.setAngle(270);
@@ -46,7 +46,7 @@ MyClock.prototype.display = function() {
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
-    this.scene.rotate(Math.PI,0,1,0);
+    this.scene.rotate(Math.PI, 0, 1, 0);
     this.scene.translate(0, 0, 0);
     this.backCircle.display();
     this.scene.popMatrix();
@@ -67,15 +67,15 @@ MyClock.prototype.display = function() {
 
 }
 
-MyClock.prototype.update = function(deltaTime){
+MyClock.prototype.update = function(deltaTime) {
 
-  let time = deltaTime/1000;
+    let time = deltaTime / 1000;
 
-  let secAngle=(this.secPointer.angle + time * 360/60)%360;
-  let minAngle=(this.minPointer.angle + time * 360/60/60)%360;
-  let hourAngle=(this.hourPointer.angle + time * 360/60/60/12)%360;
+    let secAngle = (this.secPointer.angle + time * 360 / 60) % 360;
+    let minAngle = (this.minPointer.angle + time * 360 / 60 / 60) % 360;
+    let hourAngle = (this.hourPointer.angle + time * 360 / 60 / 60 / 12) % 360;
 
-  this.secPointer.setAngle(secAngle);
-  this.minPointer.setAngle(minAngle);
-  this.hourPointer.setAngle(hourAngle);
+    this.secPointer.setAngle(secAngle);
+    this.minPointer.setAngle(minAngle);
+    this.hourPointer.setAngle(hourAngle);
 }
