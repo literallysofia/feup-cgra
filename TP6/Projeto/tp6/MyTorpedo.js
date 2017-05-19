@@ -77,9 +77,11 @@ MyTorpedo.prototype.setPoints = function() {
   this.p1y = this.y;
   this.p1z = this.z;
 
-  this.p2x = this.x+6*Math.sin(this.scene.subAngle);
+  console.log(this.scene.submarine.subAngle*180/Math.PI);
+
+  this.p2x = this.x+20*Math.sin(Math.PI-this.scene.submarine.subAngle);
   this.p2y = this.y;
-  this.p2z = this.z+6*Math.cos(this.scene.subAngle);
+  this.p2z = this.z+20*Math.cos(Math.PI-this.scene.submarine.subAngle);
 
   this.p3x = this.target.x;
   this.p3y = this.target.y+3;

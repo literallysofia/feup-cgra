@@ -6,37 +6,28 @@ function MySubmarine(scene) {
     CGFobject.call(this, scene);
 
     this.mainCylinder = new MyCylinder(this.scene, 20, 20);
-    this.mainCylinder.initBuffers();
-
     this.topCylinder = new MyCylinder(this.scene, 20, 20);
-    this.topCylinder.initBuffers();
-
     this.topCircle = new MyCircle(this.scene, 20);
-    this.topCircle.initBuffers();
-
     this.frontSemiSphere = new MySemiSphere(this.scene, 20, 20);
-    this.frontSemiSphere.initBuffers();
-
     this.backSemiSphere = new MySemiSphere(this.scene, 20, 20);
-    this.backSemiSphere.initBuffers();
-
     this.periscope = new MyPeriscope(this.scene);
-    this.periscope.initBuffers();
-
     this.verticalTrapeze = new MyTrapeze(this.scene);
-    this.verticalTrapeze.initBuffers();
-
     this.horizontalTrapeze = new MyTrapeze(this.scene);
-    this.horizontalTrapeze.initBuffers();
-
     this.horizontalTrapezeFront = new MyTrapeze(this.scene);
-    this.horizontalTrapezeFront.initBuffers();
-
     this.rightPropeller = new MyPropeller(this.scene);
-    this.rightPropeller.initBuffers();
-
     this.leftPropeller = new MyPropeller(this.scene);
-    this.leftPropeller.initBuffers();
+
+    //submarine data
+    this.subAngle = 180 * degToRad;
+    this.subX = 8;
+    this.subY = 1.6;
+    this.subZ = 8;
+    this.subVelocity = 0;
+    this.subSlope = 0;
+    this.subSlopeMove = false;
+    this.resetSlope = false;
+    this.subVerticalDirection = 0;
+
 
     //periscope data
     this.periscopeY = 1.5;
@@ -52,6 +43,7 @@ function MySubmarine(scene) {
     this.horizontalTrapezeMove = false;
     this.horizontalTrapezeDirection = 0;
     this.horizontalTrapezeAngle = 0;
+
 };
 
 MySubmarine.prototype = Object.create(CGFobject.prototype);
@@ -346,5 +338,74 @@ MySubmarine.prototype.activateResetPosition = function() {
     this.resetPosition = true;
     this.verticalTrapezeMove = true;
     this.horizontalTrapezeMove = true;
+
+};
+
+MySubmarine.prototype.updateSubmarine = function() {
+    this.subX += this.subVelocity * Math.sin(this.subAngle);
+    this.subZ += this.subVelocity * Math.cos(this.subAngle);
+};
+
+MySubmarine.prototype.startSlope = function(direction) {
+    this.resetSlope = false;
+    this.subVerticalDirection = direction;
+    this.subSlopeMove = true;
+};
+
+MySubmarine.prototype.activateResetSlope = function() {
+
+    this.resetSlope = true;
+    this.subSlopeMove = true;
+
+};
+
+
+MySubmarine.prototype.updateSubmarineSlope = function() {
+
+    if (this.resetSlope) {
+
+        switch (this.subVerticalDirection) {
+            case (1): //sobe
+
+                if (this.subSlope < 0) {
+                    this.subSlopeMove = false;
+                    this.subSlope = 0;
+                } else
+                    this.subSlope -= (2 * Math.PI) / 100;
+
+                break;
+            case (-1): //desce
+
+                if (this.subSlope > 0) {
+                    this.subSlopeMove = false;
+                    this.subSlope = 0;
+                } else
+                    this.subSlope += (2 * Math.PI) / 100;
+
+                break;
+        };
+
+    } else {
+
+        switch (this.subVerticalDirection) {
+            case (1): //sobe
+
+                if (this.subSlope > (Math.PI / 10))
+                    this.subSlopeMove = false;
+                else
+                    this.subSlope += (2 * Math.PI) / 100;
+
+                break;
+            case (-1): //desce
+
+                if (this.subSlope < -(Math.PI / 10))
+                    this.subSlopeMove = false;
+                else
+                    this.subSlope -= (2 * Math.PI) / 100;
+
+                break;
+        };
+
+    }
 
 };

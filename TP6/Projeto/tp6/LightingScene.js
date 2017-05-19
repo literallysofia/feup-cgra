@@ -145,21 +145,6 @@ LightingScene.prototype.init = function(application) {
     this.speed = 2;
     CLOCKPAUSE = false;
 
-
-
-    //submarine data
-    this.subAngle = 180 * degToRad;
-    this.subX = 8;
-    this.subY = 1.6;
-    this.subZ = 8;
-    this.subVelocity = 0;
-    this.subSlope = 0;
-    this.resetSlope = false;
-    this.subVerticalDirection = 0;
-    this.subSlopeMove = false;
-
-    //this.torpedo;
-
 };
 
 LightingScene.prototype.animacaoRelogio = function() {
@@ -244,10 +229,17 @@ LightingScene.prototype.update = function(currTime) {
         this.clock.update(this.deltaTime);
     }
 
+    //Submarine
+    this.submarine.updatePropeller(this.deltaTime, this.submarine.subVelocity, this.speed);
+
+    if (this.submarine.subSlopeMove)
+        this.submarine.updateSubmarineSlope();
+
+    this.submarine.updateSubmarine();
+
     this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
 
-    this.submarine.updatePropeller(this.deltaTime, this.subVelocity, this.speed);
-
+    //Torpedo and Torget
     if(this.torpedo!=null) this.torpedo.moveToTarget(this.deltaTime);
 
     if(this.target1.destroyed) this.target1.explosion.move(this.deltaTime);
@@ -280,12 +272,8 @@ LightingScene.prototype.display = function() {
 
     // ---- END Background, camera and axis setup
 
-
-
-
     // ---- BEGIN Primitive drawing section
 
-    //this.gl.clearColor(0.047, 0.086, 0.156, 1); //dark blue
     this.gl.clearColor(0.094, 0.196, 0.278, 1); //light blue
 
     //Clock
@@ -306,7 +294,6 @@ LightingScene.prototype.display = function() {
 
     //Ocean
     this.pushMatrix();
-    //this.translate(16, 0, 16);
     this.rotate(-90 * degToRad, 1, 0, 0);
     this.scale(32, 32, 0.2);
     this.oceanAppearance.apply();
@@ -314,16 +301,10 @@ LightingScene.prototype.display = function() {
     this.popMatrix();
 
     //Submarine
-    if (this.subSlopeMove)
-        this.updateSubmarineSlope();
-
-    this.updateSubmarine();
-
     this.pushMatrix();
-    this.translate(this.subX, this.subY, this.subZ);
-    this.rotate(this.subAngle, 0, 1, 0);
-    this.rotate(-this.subSlope, 1, 0, 0);
-    this.materialSubDefault.apply();
+    this.translate(this.submarine.subX, this.submarine.subY, this.submarine.subZ);
+    this.rotate(this.submarine.subAngle, 0, 1, 0);
+    this.rotate(-this.submarine.subSlope, 1, 0, 0);
     this.translate(0,0,-2);
     this.submarineAppearances[this.currSubmarineAppearance].apply();
     this.submarine.display();
@@ -353,25 +334,21 @@ LightingScene.prototype.display = function() {
 LightingScene.prototype.move = function(keycode) {
 
     if(keycode==97||keycode==65){ //a || A
-      this.subAngle += (2 * Math.PI) / 100;
+      this.submarine.subAngle += (2 * Math.PI) / 100;
       this.submarine.activateVerticalTrapezes(1);
     }
 
     if(keycode==115||keycode==83){ //s || S
-      this.subVelocity -= 0.01 * this.speed;
-      //this.subX = this.subX - 0.1 * Math.sin(this.subAngle);
-      //this.subZ = this.subZ - 0.1 * Math.cos(this.subAngle);
+      this.submarine.subVelocity -= 0.01 * this.speed;
     }
 
     if(keycode==100||keycode==68){ //d || D
-      this.subAngle -= (2 * Math.PI) / 100;
+      this.submarine.subAngle -= (2 * Math.PI) / 100;
       this.submarine.activateVerticalTrapezes(2);
     }
 
     if(keycode==119||keycode==87){ //w || W
-      this.subVelocity += 0.01 * this.speed;
-      //this.subX = this.subX + 0.1 * Math.sin(this.subAngle);
-      //this.subZ = this.subZ + 0.1 * Math.cos(this.subAngle);
+      this.submarine.subVelocity += 0.01 * this.speed;
     }
 
     if(keycode==112||keycode==80){ //p || P
@@ -383,95 +360,23 @@ LightingScene.prototype.move = function(keycode) {
     }
 
     if(keycode==113||keycode==81){ //q || Q
-      this.subY += 0.1;
-      this.startSlope(1);
+      this.submarine.subY += 0.1;
+      this.submarine.startSlope(1);
       this.submarine.activateHorizontalTrapezes(1);
     }
 
     if(keycode==101||keycode==69){ //e || E
-      this.subY -= 0.1;
-      this.startSlope(-1);
+      this.submarine.subY -= 0.1;
+      this.submarine.startSlope(-1);
       this.submarine.activateHorizontalTrapezes(2);
     }
 
     if(keycode==102||keycode==70){ //f || F
       if(this.targetIndex<3){
-        this.torpedo = new MyTorpedo(this, this.subX, this.subY, this.subZ);
+        this.torpedo = new MyTorpedo(this, this.submarine.subX, this.submarine.subY, this.submarine.subZ);
         this.torpedo.target=this.targets[this.targetIndex];
         this.torpedo.setPoints();
         this.targetIndex+=1;
       }
     }
-};
-
-LightingScene.prototype.updateSubmarine = function() {
-
-    this.subX += this.subVelocity * Math.sin(this.subAngle);
-    this.subZ += this.subVelocity * Math.cos(this.subAngle);
-
-};
-
-LightingScene.prototype.startSlope = function(direction) {
-
-    this.resetSlope = false;
-    this.subVerticalDirection = direction;
-    this.subSlopeMove = true;
-
-};
-
-LightingScene.prototype.activateResetSlope = function() {
-
-    this.resetSlope = true;
-    this.subSlopeMove = true;
-
-};
-
-LightingScene.prototype.updateSubmarineSlope = function() {
-
-    if (this.resetSlope) {
-
-        switch (this.subVerticalDirection) {
-            case (1): //sobe
-
-                if (this.subSlope < 0) {
-                    this.subSlopeMove = false;
-                    this.subSlope = 0;
-                } else
-                    this.subSlope -= (2 * Math.PI) / 100;
-
-                break;
-            case (-1): //desce
-
-                if (this.subSlope > 0) {
-                    this.subSlopeMove = false;
-                    this.subSlope = 0;
-                } else
-                    this.subSlope += (2 * Math.PI) / 100;
-
-                break;
-        };
-
-    } else {
-
-        switch (this.subVerticalDirection) {
-            case (1): //sobe
-
-                if (this.subSlope > (Math.PI / 10))
-                    this.subSlopeMove = false;
-                else
-                    this.subSlope += (2 * Math.PI) / 100;
-
-                break;
-            case (-1): //desce
-
-                if (this.subSlope < -(Math.PI / 10))
-                    this.subSlopeMove = false;
-                else
-                    this.subSlope -= (2 * Math.PI) / 100;
-
-                break;
-        };
-
-    }
-
 };
