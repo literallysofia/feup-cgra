@@ -25,7 +25,6 @@ function MySubmarine(scene) {
     this.subVelocity = 0;
     this.subSlope = 0;
     this.subSlopeMove = false;
-    this.resetSlope = false;
     this.subVerticalDirection = 0;
 
 
@@ -346,66 +345,34 @@ MySubmarine.prototype.updateSubmarine = function() {
     this.subZ += this.subVelocity * Math.cos(this.subAngle);
 };
 
-MySubmarine.prototype.startSlope = function(direction) {
-    this.resetSlope = false;
+MySubmarine.prototype.applySlope = function(direction) {
     this.subVerticalDirection = direction;
     this.subSlopeMove = true;
 };
 
-MySubmarine.prototype.activateResetSlope = function() {
-
-    this.resetSlope = true;
-    this.subSlopeMove = true;
-
-};
-
-
 MySubmarine.prototype.updateSubmarineSlope = function() {
 
-    if (this.resetSlope) {
+    switch (this.subVerticalDirection) {
+        case (1): //sobe
 
-        switch (this.subVerticalDirection) {
-            case (1): //sobe
+            if (this.subSlope > (Math.PI / 10))
+                this.subSlopeMove = false;
+            else {
+                this.subSlope += (2 * Math.PI) / 100;
+                this.subSlopeMove = false;
+            }
 
-                if (this.subSlope < 0) {
-                    this.subSlopeMove = false;
-                    this.subSlope = 0;
-                } else
-                    this.subSlope -= (2 * Math.PI) / 100;
+            break;
+        case (-1): //desce
 
-                break;
-            case (-1): //desce
+            if (this.subSlope < -(Math.PI / 10))
+                this.subSlopeMove = false;
+            else {
+                this.subSlope -= (2 * Math.PI) / 100;
+                this.subSlopeMove = false;
+            }
 
-                if (this.subSlope > 0) {
-                    this.subSlopeMove = false;
-                    this.subSlope = 0;
-                } else
-                    this.subSlope += (2 * Math.PI) / 100;
-
-                break;
-        };
-
-    } else {
-
-        switch (this.subVerticalDirection) {
-            case (1): //sobe
-
-                if (this.subSlope > (Math.PI / 10))
-                    this.subSlopeMove = false;
-                else
-                    this.subSlope += (2 * Math.PI) / 100;
-
-                break;
-            case (-1): //desce
-
-                if (this.subSlope < -(Math.PI / 10))
-                    this.subSlopeMove = false;
-                else
-                    this.subSlope -= (2 * Math.PI) / 100;
-
-                break;
-        };
-
-    }
+            break;
+    };
 
 };

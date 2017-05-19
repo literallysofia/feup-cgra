@@ -77,6 +77,5 @@ MyInterface.prototype.processKeyboard = function(event) {
 
     window.onkeyup = function(e) {
         self.scene.submarine.activateResetPosition();
-        self.scene.submarine.activateResetSlope();
     }
 };

@@ -35,14 +35,14 @@ LightingScene.prototype.init = function(application) {
     this.stake = new MyCylinder(this, 8, 20);
     this.clock = new MyClock(this);
     this.submarine = new MySubmarine(this);
-    this.circle=new MyCircle(this,20);
-    this.explosion=new MyExplosion(this);
+    this.circle = new MyCircle(this, 20);
+    this.explosion = new MyExplosion(this);
 
-    this.target1 = new MyTarget(this,-10,0.5,8);
-    this.target2 = new MyTarget(this,5,0.5,14);
-    this.target3 = new MyTarget(this,-6,0.5,-6);
+    this.target1 = new MyTarget(this, -10, 0.5, 8);
+    this.target2 = new MyTarget(this, 5, 0.5, 14);
+    this.target3 = new MyTarget(this, -6, 0.5, -6);
     this.targets = [this.target1, this.target2, this.target3];
-    this.targetIndex=0;
+    this.targetIndex = 0;
 
     // Materials
     this.materialDefault = new CGFappearance(this);
@@ -115,7 +115,7 @@ LightingScene.prototype.init = function(application) {
     this.lightMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.lightMetal.setSpecular(1, 1, 1, 1);
 
-    this.usa= new CGFappearance(this);
+    this.usa = new CGFappearance(this);
     this.usa.loadTexture("../resources/images/usa.jpg");
     this.usa.setTextureWrap("REPEAT", "REPEAT");
     this.usa.setAmbient(0.8, 0.8, 0.8, 1);
@@ -240,11 +240,11 @@ LightingScene.prototype.update = function(currTime) {
     this.currSubmarineAppearance = this.submarineAppearancesList[this.submarineTexture];
 
     //Torpedo and Torget
-    if(this.torpedo!=null) this.torpedo.moveToTarget(this.deltaTime);
+    if (this.torpedo != null) this.torpedo.moveToTarget(this.deltaTime);
 
-    if(this.target1.destroyed) this.target1.explosion.move(this.deltaTime);
-    if(this.target2.destroyed) this.target2.explosion.move(this.deltaTime);
-    if(this.target3.destroyed) this.target3.explosion.move(this.deltaTime);
+    if (this.target1.destroyed) this.target1.explosion.move(this.deltaTime);
+    if (this.target2.destroyed) this.target2.explosion.move(this.deltaTime);
+    if (this.target3.destroyed) this.target3.explosion.move(this.deltaTime);
 }
 
 LightingScene.prototype.display = function() {
@@ -305,7 +305,7 @@ LightingScene.prototype.display = function() {
     this.translate(this.submarine.subX, this.submarine.subY, this.submarine.subZ);
     this.rotate(this.submarine.subAngle, 0, 1, 0);
     this.rotate(-this.submarine.subSlope, 1, 0, 0);
-    this.translate(0,0,-2);
+    this.translate(0, 0, -2);
     this.submarineAppearances[this.currSubmarineAppearance].apply();
     this.submarine.display();
     this.popMatrix();
@@ -319,64 +319,62 @@ LightingScene.prototype.display = function() {
     this.popMatrix();
 
     //Torpedo
-    if(this.torpedo!=null && !this.torpedo.destroyed) {
-    this.pushMatrix();
-    this.translate(this.torpedo.x,this.torpedo.y,this.torpedo.z);
-    this.rotate(this.torpedo.angxy,0,1,0);
-    this.rotate(-this.torpedo.angz,1,0,0);
-    this.rotate(Math.PI,1,0,0);
-    this.submarineAppearances[this.currSubmarineAppearance].apply();
-    this.torpedo.display();
-    this.popMatrix();
-  }
+    if (this.torpedo != null && !this.torpedo.destroyed) {
+        this.pushMatrix();
+        this.translate(this.torpedo.x, this.torpedo.y, this.torpedo.z);
+        this.rotate(this.torpedo.angxy, 0, 1, 0);
+        this.rotate(-this.torpedo.angz, 1, 0, 0);
+        this.rotate(Math.PI, 1, 0, 0);
+        this.submarineAppearances[this.currSubmarineAppearance].apply();
+        this.torpedo.display();
+        this.popMatrix();
+    }
 };
 
 LightingScene.prototype.move = function(keycode) {
 
-    if(keycode==97||keycode==65){ //a || A
-      this.submarine.subAngle += (2 * Math.PI) / 100;
-      this.submarine.activateVerticalTrapezes(1);
+    if (keycode == 97 || keycode == 65) { //a || A
+        this.submarine.subAngle += (2 * Math.PI) / 100;
+        this.submarine.activateVerticalTrapezes(1);
     }
 
-    if(keycode==115||keycode==83){ //s || S
-      this.submarine.subVelocity -= 0.01 * this.speed;
+    if (keycode == 115 || keycode == 83) { //s || S
+        this.submarine.subVelocity -= 0.01 * this.speed;
     }
 
-    if(keycode==100||keycode==68){ //d || D
-      this.submarine.subAngle -= (2 * Math.PI) / 100;
-      this.submarine.activateVerticalTrapezes(2);
+    if (keycode == 100 || keycode == 68) { //d || D
+        this.submarine.subAngle -= (2 * Math.PI) / 100;
+        this.submarine.activateVerticalTrapezes(2);
     }
 
-    if(keycode==119||keycode==87){ //w || W
-      this.submarine.subVelocity += 0.01 * this.speed;
+    if (keycode == 119 || keycode == 87) { //w || W
+        this.submarine.subVelocity += 0.01 * this.speed;
     }
 
-    if(keycode==112||keycode==80){ //p || P
-      this.submarine.updatePeriscopeMove(keycode);
+    if (keycode == 112 || keycode == 80) { //p || P
+        this.submarine.updatePeriscopeMove(keycode);
     }
 
-    if(keycode==108||keycode==76){ //l || L
-      this.submarine.updatePeriscopeMove(keycode);
+    if (keycode == 108 || keycode == 76) { //l || L
+        this.submarine.updatePeriscopeMove(keycode);
     }
 
-    if(keycode==113||keycode==81){ //q || Q
-      this.submarine.subY += 0.1;
-      this.submarine.startSlope(1);
-      this.submarine.activateHorizontalTrapezes(1);
+    if (keycode == 113 || keycode == 81) { //q || Q
+        this.submarine.applySlope(1);
+        this.submarine.activateHorizontalTrapezes(1);
     }
 
-    if(keycode==101||keycode==69){ //e || E
-      this.submarine.subY -= 0.1;
-      this.submarine.startSlope(-1);
-      this.submarine.activateHorizontalTrapezes(2);
+    if (keycode == 101 || keycode == 69) { //e || E
+        this.submarine.applySlope(-1);
+        this.submarine.activateHorizontalTrapezes(2);
     }
 
-    if(keycode==102||keycode==70){ //f || F
-      if(this.targetIndex<3){
-        this.torpedo = new MyTorpedo(this, this.submarine.subX, this.submarine.subY, this.submarine.subZ);
-        this.torpedo.target=this.targets[this.targetIndex];
-        this.torpedo.setPoints();
-        this.targetIndex+=1;
-      }
+    if (keycode == 102 || keycode == 70) { //f || F
+        if (this.targetIndex < 3) {
+            this.torpedo = new MyTorpedo(this, this.submarine.subX, this.submarine.subY, this.submarine.subZ);
+            this.torpedo.target = this.targets[this.targetIndex];
+            this.torpedo.setPoints();
+            this.targetIndex += 1;
+        }
     }
 };
