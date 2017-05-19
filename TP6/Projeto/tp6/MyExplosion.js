@@ -36,6 +36,8 @@ function MyExplosion(scene, x, y, z) {
     ];
 
     this.bubbleAppearance = new CGFappearance(this.scene);
+    this.bubbleAppearance.loadTexture("../resources/images/bubble.png");
+    this.bubbleAppearance.setTextureWrap("REPEAT", "REPEAT");
     this.bubbleAppearance.setAmbient(1, 1, 1, 1);
     this.bubbleAppearance.setDiffuse(24 / 255, 50 / 255, 71 / 255, 1);
     this.bubbleAppearance.setSpecular(1, 1, 1, 1);
