@@ -337,8 +337,10 @@ LightingScene.prototype.display = function() {
 LightingScene.prototype.move = function(keycode) {
 
     if (keycode == 97 || keycode == 65) { //a || A
-        this.submarine.subAngle += (2 * Math.PI) / 100;
-        this.submarine.activateVerticalTrapezes(1);
+        if (this.submarine.subVelocity != 0) {
+            this.submarine.subAngle += (2 * Math.PI) / 100;
+            this.submarine.activateVerticalTrapezes(1);
+        }
     }
 
     if (keycode == 115 || keycode == 83) { //s || S
@@ -346,8 +348,10 @@ LightingScene.prototype.move = function(keycode) {
     }
 
     if (keycode == 100 || keycode == 68) { //d || D
-        this.submarine.subAngle -= (2 * Math.PI) / 100;
-        this.submarine.activateVerticalTrapezes(2);
+        if (this.submarine.subVelocity != 0) {
+            this.submarine.subAngle -= (2 * Math.PI) / 100;
+            this.submarine.activateVerticalTrapezes(2);
+        }
     }
 
     if (keycode == 119 || keycode == 87) { //w || W
