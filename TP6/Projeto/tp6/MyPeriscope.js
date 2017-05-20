@@ -7,10 +7,8 @@ function MyPeriscope(scene) {
     CGFobject.call(this, scene);
 
     this.mainPeriscope = new MyCylinder(this.scene, 20, 20);
-    this.mainPeriscope.initBuffers();
 
     this.topPeriscope = new MyCylinder(this.scene, 20, 20);
-    this.topPeriscope.initBuffers();
 
 };
 

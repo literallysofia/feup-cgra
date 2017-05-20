@@ -1,11 +1,4 @@
 var degToRad = Math.PI / 180.0;
-
-var BOARD_WIDTH = 6.0;
-var BOARD_HEIGHT = 4.0;
-
-var BOARD_A_DIVISIONS = 1;
-var BOARD_B_DIVISIONS = 100;
-
 var CLOCKPAUSE;
 
 function LightingScene() {
@@ -38,7 +31,6 @@ LightingScene.prototype.init = function(application) {
     this.stake = new MyCylinder(this, 8, 20);
     this.clock = new MyClock(this);
     this.submarine = new MySubmarine(this);
-    this.circle = new MyCircle(this, 20);
     this.explosion = new MyExplosion(this);
 
     this.target1 = new MyTarget(this, -10, 0.5, 8);
@@ -59,15 +51,6 @@ LightingScene.prototype.init = function(application) {
     // Textures
     this.enableTextures(true);
 
-    this.floorAppearance = new CGFappearance(this);
-    this.floorAppearance.loadTexture("../resources/images/floor.png");
-    this.floorAppearance.setTextureWrap("REPEAT", "REPEAT");
-    this.floorAppearance.setAmbient(0.5, 0.5, 0.5, 1);
-
-    this.cylinderAppearance = new CGFappearance(this);
-    this.cylinderAppearance.loadTexture("../resources/images/cylinderTexture.jpg");
-    this.cylinderAppearance.setAmbient(0.5, 0.5, 0.5, 1);
-
     this.oceanAppearance = new CGFappearance(this);
     this.oceanAppearance.loadTexture("../resources/images/ocean2.png");
     this.oceanAppearance.setTextureWrap("REPEAT", "REPEAT");
@@ -78,7 +61,6 @@ LightingScene.prototype.init = function(application) {
 
     this.woodAppearance = new CGFappearance(this);
     this.woodAppearance.loadTexture("../resources/images/wood.jpg");
-    this.woodAppearance.setTextureWrap("REPEAT", "REPEAT");
     this.woodAppearance.setDiffuse(0.3, 0.3, 0.3, 1);
     this.woodAppearance.setSpecular(0.4, 0.4, 0.4, 1);
     this.woodAppearance.setAmbient(0.5, 0.5, 0.5, 1);
@@ -92,7 +74,6 @@ LightingScene.prototype.init = function(application) {
 
     this.blueMetal = new CGFappearance(this);
     this.blueMetal.loadTexture("../resources/images/sub1.jpg");
-    this.blueMetal.setTextureWrap("REPEAT", "REPEAT");
     this.blueMetal.setAmbient(0.8, 0.8, 0.8, 1);
     this.blueMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.blueMetal.setSpecular(1, 1, 1, 1);
@@ -106,21 +87,18 @@ LightingScene.prototype.init = function(application) {
 
     this.greyMetal = new CGFappearance(this);
     this.greyMetal.loadTexture("../resources/images/sub3.jpg");
-    this.greyMetal.setTextureWrap("REPEAT", "REPEAT");
     this.greyMetal.setAmbient(0.8, 0.8, 0.8, 1);
     this.greyMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.greyMetal.setSpecular(1, 1, 1, 1);
 
     this.lightMetal = new CGFappearance(this);
     this.lightMetal.loadTexture("../resources/images/sub4.jpg");
-    this.lightMetal.setTextureWrap("REPEAT", "REPEAT");
     this.lightMetal.setAmbient(0.8, 0.8, 0.8, 1);
     this.lightMetal.setDiffuse(0.5, 0.5, 0.5, 1);
     this.lightMetal.setSpecular(1, 1, 1, 1);
 
     this.sky = new CGFappearance(this);
     this.sky.loadTexture("../resources/images/sky.png");
-    this.sky.setTextureWrap("REPEAT", "REPEAT");
     this.sky.setAmbient(0.8, 0.8, 0.8, 1);
     this.sky.setDiffuse(0.5, 0.5, 0.5, 1);
     this.sky.setSpecular(1, 1, 1, 1);
@@ -325,8 +303,8 @@ LightingScene.prototype.display = function() {
     if (this.torpedo != null && !this.torpedo.destroyed) {
         this.pushMatrix();
         this.translate(this.torpedo.x, this.torpedo.y, this.torpedo.z);
-        this.rotate(this.torpedo.angxy, 0, 1, 0);
-        this.rotate(-this.torpedo.angz, 1, 0, 0);
+        this.rotate(this.torpedo.angy, 0, 1, 0);
+        this.rotate(-this.torpedo.angx, 1, 0, 0);
         this.rotate(Math.PI, 1, 0, 0);
         this.submarineAppearances[this.currSubmarineAppearance].apply();
         this.torpedo.display();

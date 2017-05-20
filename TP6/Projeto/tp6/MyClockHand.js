@@ -7,7 +7,6 @@ function MyClockHand(scene, radius, height) {
     CGFobject.call(this, scene);
 
     this.pointer = new MyCylinder(this.scene, 12, 6);
-    this.pointer.initBuffers();
 
     this.radius = radius;
     this.height = height;

@@ -9,7 +9,6 @@ function MyClock(scene) {
     this.time = 0;
 
     this.cilinder = new MyCylinder(this.scene, 12, 1);
-    this.cilinder.initBuffers();
 
     this.clockAppearance = new CGFappearance(this.scene);
     this.clockAppearance.loadTexture("../resources/images/clock.png");
@@ -18,10 +17,8 @@ function MyClock(scene) {
     this.materialDefault = new CGFappearance(this.scene);
 
     this.frontCircle = new MyCircle(this.scene, 12);
-    this.frontCircle.initBuffers();
 
     this.backCircle = new MyCircle(this.scene, 12);
-    this.backCircle.initBuffers();
 
     this.secPointer = new MyClockHand(this.scene, 0.015, 0.8);
     this.minPointer = new MyClockHand(this.scene, 0.03, 0.8);

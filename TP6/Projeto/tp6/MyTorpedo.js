@@ -15,16 +15,16 @@ function MyTorpedo(scene, x, y, z) {
     this.t = 0;
 
     this.radius = 0;
-    this.angz = 0;
-    this.angxy = 0;
+    this.angx = 0;
+    this.angy = 0;
     this.destroyed = false;
 
 
     this.cylinder = new MyCylinder(this.scene, 20, 20);
     this.frontSemiSphere = new MySemiSphere(this.scene, 20, 20);
     this.backSemiSphere = new MySemiSphere(this.scene, 20, 20);
-    this.horizontalTrapeze = new MyTrapeze(this.scene);
-    this.verticalTrapeze = new MyTrapeze(this.scene);
+    this.horizontalTrapeze = new MyTriangularPrism(this.scene);
+    this.verticalTrapeze = new MyTriangularPrism(this.scene);
 };
 
 
@@ -111,8 +111,8 @@ MyTorpedo.prototype.moveToTarget = function(delta) {
         c = this.z - newZ;
 
         this.radius = Math.sqrt(a * a + b * b + c * c);
-        this.angz = Math.atan(b / a);
-        this.angxy = Math.acos(c / this.radius);
+        this.angx = Math.atan(b / a);
+        this.angy = Math.acos(c / this.radius);
 
         this.x = newX;
         this.y = newY;

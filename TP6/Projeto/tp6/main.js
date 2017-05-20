@@ -38,7 +38,6 @@ serialInclude([
     'LightingScene.js',
     'MyPrism.js',
     'MyQuad.js',
-    'MyTable.js',
     'MyUnitCubeQuad.js',
     'Plane.js',
     'MyCylinder.js',
@@ -50,13 +49,13 @@ serialInclude([
     'MySemiSphere.js',
     'MyTriangularPrism.js',
     'MyTriangle.js',
-    'MyTrapeze.js',
     'MyPropeller.js',
     'MyPeriscope.js',
     'MyTarget.js',
     'MyTorpedo.js',
     'MyBubble.js',
     'MyExplosion.js',
+    'MyTrapezoid.js',
 
     main = function() {
         var app = new CGFapplication(document.body);

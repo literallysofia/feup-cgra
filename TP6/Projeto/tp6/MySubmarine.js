@@ -11,9 +11,9 @@ function MySubmarine(scene) {
     this.frontSemiSphere = new MySemiSphere(this.scene, 20, 20);
     this.backSemiSphere = new MySemiSphere(this.scene, 20, 20);
     this.periscope = new MyPeriscope(this.scene);
-    this.verticalTrapeze = new MyTrapeze(this.scene);
-    this.horizontalTrapeze = new MyTrapeze(this.scene);
-    this.horizontalTrapezeFront = new MyTrapeze(this.scene);
+    this.verticalTrapeze = new MyTriangularPrism(this.scene);
+    this.horizontalTrapeze = new MyTriangularPrism(this.scene);
+    this.horizontalTrapezeFront = new MyTriangularPrism(this.scene);
     this.rightPropeller = new MyPropeller(this.scene);
     this.leftPropeller = new MyPropeller(this.scene);
 

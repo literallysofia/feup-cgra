@@ -7,13 +7,10 @@ function MyPropeller(scene) {
     CGFobject.call(this, scene);
 
     this.cube = new MyUnitCubeQuad(this.scene);
-    this.cube.initBuffers();
 
     this.cylinder = new MyCylinder(this.scene, 20, 20, true);
-    this.cylinder.initBuffers();
 
     this.semiSphere = new MySemiSphere(this.scene, 20, 20);
-    this.semiSphere.initBuffers();
 
     this.quadRotation = 0;
 };
