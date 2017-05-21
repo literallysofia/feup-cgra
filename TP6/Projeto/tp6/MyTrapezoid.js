@@ -39,10 +39,10 @@ MyTrapezoid.prototype.initBuffers = function() {
     ];
 
     this.texCoords = [
-        this.minS, this.maxT,
-        this.maxS, this.maxT,
-        this.minS, this.minT,
-        this.maxS, this.minT
+        0,1,
+        1,1,
+        5/6,0,
+        1/6,0
     ];
 
     this.primitiveType = this.scene.gl.TRIANGLES;
